@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy-950: #060d1b;
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+  --color-navy-700: #334155;
+  --color-navy-600: #475569;
+  --color-navy-500: #64748b;
+
+  --color-brand-blue-600: #2563eb;
+  --color-brand-blue-700: #1d4ed8;
+  --color-brand-cyan-600: #0891b2;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-noto-sans-jp), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    font-family:
+      var(--font-noto-sans-jp),
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+::selection {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+/* microCMS リッチエディタ用スタイル */
+.cms-content h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cms-content blockquote {
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.cms-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.cms-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.cms-content img {
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

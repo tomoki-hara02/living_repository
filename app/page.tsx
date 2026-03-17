@@ -1,65 +1,106 @@
-import Image from "next/image";
+import { getRepositories } from "@/app/lib/microcms";
+import RepositoryList from "@/app/components/RepositoryList";
+import AboutSection from "@/app/components/AboutSection";
+export default async function Home() {
+  const repositories = await getRepositories();
 
-export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="bg-white">
+      {/* ===== Hero — 本体サイトと同一構造 ===== */}
+      <div className="relative w-full overflow-hidden">
+        {/* 背景 */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom right, #2563eb, #1d4ed8, #0891b2)",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+
+        {/* コンテンツ */}
+        <div className="relative mx-auto max-w-7xl px-4 pt-28 pb-24 sm:px-6 sm:pt-40 sm:pb-36 md:pb-44">
+          <div className="max-w-5xl text-white">
+            {/* h1 タイトル */}
+            <h1 className="text-lg font-bold leading-tight tracking-tight sm:text-2xl md:text-3xl lg:text-4xl">
+              <span className="block mb-2">生成AI活用</span>
+              <span
+                className="inline-block align-baseline font-extrabold leading-none"
+                style={{ fontSize: "clamp(1.6em, 5vw, 2.4em)" }}
+              >
+                Living
+              </span>
+              {" "}
+              <span
+                className="inline-block align-baseline font-extrabold leading-none"
+                style={{ fontSize: "clamp(1.6em, 5vw, 2.4em)" }}
+              >
+                Repository
+              </span>
+            </h1>
+
+            {/* 本文（3行を独立した p 要素で、行間 mt-2 sm:mt-3） */}
+            <p className="mt-4 text-[13px] leading-relaxed sm:mt-5 sm:text-sm md:text-base">
+              「何から始めたらいいのかわからない」そんな企業の疑問を解消するために
+            </p>
+            <p className="mt-2 text-[13px] leading-relaxed sm:mt-3 sm:text-sm md:text-base">
+              生成AIに注力するtAiL.法律事務所が、ビジネス現場で採用できる生成AIユースケースを
+            </p>
+            <p className="mt-2 text-[13px] leading-relaxed sm:mt-3 sm:text-sm md:text-base">
+              主要関連法令やリスクと共に整理して掲載しています
+            </p>
+
+            {/* CTA ボタン */}
+            <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
+              <a
+                href="#repositories"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 shadow-lg transition-all duration-300 hover:bg-blue-50 hover:shadow-xl sm:px-8 sm:py-4 sm:text-base"
+              >
+                Case Study
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+              </a>
+              <a
+                href="https://tail-legal.jp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/20 sm:px-8 sm:py-4 sm:text-base"
+              >
+                tAiL. website
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* 斜めディバイダー — 本体サイトと完全同一 */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-white sm:h-20 md:h-28"
+          style={{ clipPath: "polygon(0% 70%, 100% 30%, 100% 100%, 0% 100%)" }}
+          aria-hidden
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      </div>
+
+      {/* ===== About ===== */}
+      <AboutSection />
+
+      {/* ===== Repository List ===== */}
+      <section id="repositories">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20">
+          <div className="mb-8 flex flex-col gap-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              Use Cases
+            </span>
+            <h2 className="text-2xl font-bold text-navy-900 sm:text-3xl">
+              ユースケース一覧
+            </h2>
+          </div>
+
+          <RepositoryList repositories={repositories} />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
     </div>
   );
 }
