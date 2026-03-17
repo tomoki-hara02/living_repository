@@ -11,26 +11,20 @@ const MICROCMS_API_BASE =
   `https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1` as const;
 const ENDPOINT = "living_repository";
 
-function getApiKey(): string {
-  const key = process.env.MICROCMS_API_KEY;
-  if (!key) {
-    if (process.env.NODE_ENV === "development") return "";
-    throw new Error("MICROCMS_API_KEY が未設定です");
-  }
-  return key;
+function getApiKey(): string | null {
+  return process.env.MICROCMS_API_KEY ?? null;
 }
 
-const useDummy = !process.env.MICROCMS_API_KEY;
-
 export async function getRepositories(): Promise<Repository[]> {
-  if (useDummy) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
     return dummyRepositories;
   }
 
   const res = await fetch(
     `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-published_at`,
     {
-      headers: { "X-MICROCMS-API-KEY": getApiKey() },
+      headers: { "X-MICROCMS-API-KEY": apiKey },
       cache: "no-store",
     }
   );
@@ -44,12 +38,13 @@ export async function getRepositories(): Promise<Repository[]> {
 export async function getRepositoryById(
   id: string
 ): Promise<Repository | null> {
-  if (useDummy) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
     return dummyRepositories.find((r) => r.id === id) ?? null;
   }
 
   const res = await fetch(`${MICROCMS_API_BASE}/${ENDPOINT}/${id}`, {
-    headers: { "X-MICROCMS-API-KEY": getApiKey() },
+    headers: { "X-MICROCMS-API-KEY": apiKey },
     next: {
       revalidate: 10,
       tags: [ENDPOINT, `${ENDPOINT}-${id}`],
