@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
     const uniquePaths = [...new Set(pathsToRevalidate)];
 
     for (const tag of uniqueTags) {
-      revalidateTag(tag);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (revalidateTag as unknown as (tag: string) => void)(tag);
     }
 
     for (const path of uniquePaths) {
