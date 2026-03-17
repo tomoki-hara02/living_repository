@@ -1,6 +1,9 @@
 import { getRepositories } from "@/app/lib/microcms";
 import RepositoryList from "@/app/components/RepositoryList";
 import AboutSection from "@/app/components/AboutSection";
+
+export const revalidate = 0;
+
 export default async function Home() {
   const repositories = await getRepositories();
 

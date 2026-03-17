@@ -1,14 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import type { Repository, Level } from "@/app/lib/types";
+import { stripHtml } from "@/app/lib/types";
 
 interface RepositoryCardProps {
   repository: Repository;
-}
-
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "");
 }
 
 const levelGradient: Record<Level, string> = {
@@ -23,37 +19,11 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
   return (
     <Link
       href={`/repository/${repository.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-200 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
     >
-      <div className="flex flex-col p-4 pb-2 sm:p-6 sm:pb-3">
-        {/* レベル */}
-        {repository.level && (
-          <div className="mb-2">
-            <span
-              className="inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold text-white"
-              style={{ background: levelGradient[repository.level] }}
-            >
-              {repository.level}
-            </span>
-          </div>
-        )}
-
-        {/* comment */}
-        {repository.comment && (
-          <p className="mb-2 line-clamp-1 text-xs text-slate-500">
-            {repository.comment}
-          </p>
-        )}
-
-        {/* タイトル */}
-        <h3 className="text-base font-bold leading-snug text-gray-900 transition-colors group-hover:text-blue-600">
-          {repository.title}
-        </h3>
-      </div>
-
       {/* アイキャッチ画像 */}
       {repository.eyecatch ? (
-        <div className="relative aspect-[16/9] overflow-hidden bg-slate-100">
+        <div className="relative h-44 overflow-hidden bg-slate-100 sm:h-48 lg:h-52">
           <Image
             src={repository.eyecatch.url}
             alt={repository.title}
@@ -65,17 +35,53 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
         <div className="h-px bg-slate-100" />
       )}
 
-      <div className="flex flex-1 flex-col p-4 pt-3 sm:p-6 sm:pt-4">
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
+        {/* レベル */}
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          {repository.level && (
+            <span
+              className="rounded-full px-2.5 py-0.5 text-[11px] font-bold text-white"
+              style={{ background: levelGradient[repository.level] }}
+            >
+              {repository.level}
+            </span>
+          )}
+        </div>
+
+        {/* comment */}
+        {repository.comment && (
+          <p className="mb-1.5 line-clamp-1 text-xs text-slate-500">
+            {repository.comment}
+          </p>
+        )}
+
+        {/* タイトル */}
+        <h3 className="mb-2 line-clamp-2 text-base font-semibold leading-snug text-gray-900 transition-colors group-hover:text-blue-600">
+          {repository.title}
+        </h3>
+
         {/* summary */}
-        <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-slate-600">
+        <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-slate-600">
           {summaryText}
         </p>
 
-        {/* モデル + 法令 */}
+        {/* フッター */}
         <div className="mt-auto space-y-2 border-t border-slate-100 pt-3">
-          {repository.models && repository.models.length > 0 && (
+          {repository.laws.length > 0 && (
             <div className="flex flex-wrap gap-1">
-              {repository.models.map((m) => (
+              {repository.laws.map((l) => (
+                <span
+                  key={l}
+                  className="rounded-md bg-pink-50 px-1.5 py-0.5 text-[10px] font-medium text-pink-600"
+                >
+                  {l}
+                </span>
+              ))}
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <div className="flex flex-wrap gap-1">
+              {repository.models.slice(0, 3).map((m) => (
                 <span
                   key={m}
                   className="rounded-md bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-600"
@@ -83,25 +89,15 @@ export default function RepositoryCard({ repository }: RepositoryCardProps) {
                   {m}
                 </span>
               ))}
+              {repository.models.length > 3 && (
+                <span className="rounded-md bg-gray-50 px-1.5 py-0.5 text-[10px] text-gray-400">
+                  +{repository.models.length - 3}
+                </span>
+              )}
             </div>
-          )}
-          <div className="flex items-center">
-            {repository.laws && repository.laws.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {repository.laws.map((l) => (
-                  <span
-                    key={l}
-                    className="rounded-md bg-pink-50 px-1.5 py-0.5 text-[10px] font-medium text-pink-600"
-                  >
-                    {l}
-                  </span>
-                ))}
-              </div>
-            )}
-            <ArrowRight
-              className="ml-auto shrink-0 text-slate-300 transition-all group-hover:translate-x-1 group-hover:text-blue-500"
-              size={16}
-            />
+            <span className="text-xs font-medium text-blue-600 opacity-0 transition-opacity group-hover:opacity-100">
+              詳細を見る →
+            </span>
           </div>
         </div>
       </div>

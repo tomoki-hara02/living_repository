@@ -2,14 +2,10 @@
 
 import { useState } from "react";
 import type { Repository } from "@/app/lib/types";
-import { ALL_MODELS, ALL_LAWS, ALL_LEVELS } from "@/app/lib/types";
+import { ALL_MODELS, ALL_LAWS, ALL_LEVELS, stripHtml } from "@/app/lib/types";
 import TagFilter, { type FilterState } from "./TagFilter";
 import SearchBar from "./SearchBar";
 import RepositoryCard from "./RepositoryCard";
-
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "");
-}
 
 function matchesKeyword(repo: Repository, keyword: string): boolean {
   const q = keyword.toLowerCase();
@@ -35,12 +31,12 @@ export default function RepositoryList({ repositories }: RepositoryListProps) {
     if (keyword && !matchesKeyword(r, keyword)) return false;
     if (
       filter.models.length > 0 &&
-      !filter.models.some((m) => r.models?.includes(m))
+      !filter.models.some((m) => r.models.includes(m))
     )
       return false;
     if (
       filter.laws.length > 0 &&
-      !filter.laws.some((l) => r.laws?.includes(l))
+      !filter.laws.some((l) => r.laws.includes(l))
     )
       return false;
     if (filter.level !== null && r.level !== filter.level) return false;

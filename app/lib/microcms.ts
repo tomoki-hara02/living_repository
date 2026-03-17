@@ -1,28 +1,44 @@
-import type { Repository, MicroCMSResponse } from "./types";
+import type {
+  Repository,
+  MicroCMSRawRepository,
+  MicroCMSResponse,
+} from "./types";
+import { normalizeRepository } from "./types";
 import { dummyRepositories } from "./dummy-data";
 
-const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
-const apiKey = process.env.MICROCMS_API_KEY;
-
-const useDummy = !serviceDomain || !apiKey;
-
-const BASE_URL = `https://${serviceDomain}.microcms.io/api/v1`;
+const MICROCMS_SERVICE_DOMAIN = "tail-legal";
+const MICROCMS_API_BASE =
+  `https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1` as const;
 const ENDPOINT = "living_repository";
+
+function getApiKey(): string {
+  const key = process.env.MICROCMS_API_KEY;
+  if (!key) {
+    if (process.env.NODE_ENV === "development") return "";
+    throw new Error("MICROCMS_API_KEY が未設定です");
+  }
+  return key;
+}
+
+const useDummy = !process.env.MICROCMS_API_KEY;
 
 export async function getRepositories(): Promise<Repository[]> {
   if (useDummy) {
     return dummyRepositories;
   }
 
-  const res = await fetch(`${BASE_URL}/${ENDPOINT}?limit=100`, {
-    headers: { "X-MICROCMS-API-KEY": apiKey! },
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-published_at`,
+    {
+      headers: { "X-MICROCMS-API-KEY": getApiKey() },
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) throw new Error("Failed to fetch repositories");
 
-  const data: MicroCMSResponse<Repository> = await res.json();
-  return data.contents;
+  const data: MicroCMSResponse<MicroCMSRawRepository> = await res.json();
+  return data.contents.map(normalizeRepository);
 }
 
 export async function getRepositoryById(
@@ -32,19 +48,16 @@ export async function getRepositoryById(
     return dummyRepositories.find((r) => r.id === id) ?? null;
   }
 
-  const res = await fetch(`${BASE_URL}/${ENDPOINT}/${id}`, {
-    headers: { "X-MICROCMS-API-KEY": apiKey! },
-    next: { revalidate: 60 },
+  const res = await fetch(`${MICROCMS_API_BASE}/${ENDPOINT}/${id}`, {
+    headers: { "X-MICROCMS-API-KEY": getApiKey() },
+    next: {
+      revalidate: 10,
+      tags: [ENDPOINT, `${ENDPOINT}-${id}`],
+    },
   });
 
   if (!res.ok) return null;
 
-  return res.json();
-}
-
-export async function getAllTags(): Promise<string[]> {
-  const repos = await getRepositories();
-  const tagSet = new Set<string>();
-  repos.forEach((r) => r.tags?.forEach((t) => tagSet.add(t)));
-  return Array.from(tagSet);
+  const raw: MicroCMSRawRepository = await res.json();
+  return normalizeRepository(raw);
 }
