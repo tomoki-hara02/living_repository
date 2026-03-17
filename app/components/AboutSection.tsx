@@ -164,7 +164,7 @@ export default function AboutSection() {
                           Advanced
                         </span>
                         <p className="text-xs leading-relaxed text-gray-600">
-                          MCP連携やエージェント機能、複数ツールの組み合わせによるビジネスを飛躍させます。
+                          MCP連携やエージェント機能、複数ツールの組み合わせによりビジネスを飛躍させます。
                         </p>
                       </div>
                     </div>
