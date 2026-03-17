@@ -6,6 +6,8 @@ frontend:
         - npm ci
     build:
       commands:
+        - echo "MICROCMS_API_KEY=$MICROCMS_API_KEY" >> .env.production
+        - echo "REVALIDATE_SECRET=$REVALIDATE_SECRET" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next

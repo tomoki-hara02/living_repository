@@ -49,7 +49,7 @@ export interface MicroCMSRawRepository {
   comment?: string;
   summary: string;
   contents: string;
-  published_at?: string;
+  publishedAt?: string;
   tags?: string[];
   eyecatch?: MicroCMSImage;
   createdAt?: string;
@@ -95,7 +95,7 @@ export function normalizeRepository(raw: MicroCMSRawRepository): Repository {
   return {
     ...raw,
     comment: raw.comment ?? "",
-    published_at: raw.published_at ?? raw.createdAt ?? "",
+    published_at: raw.publishedAt ?? raw.createdAt ?? "",
     tags: raw.tags ?? [],
     models: parsed.models,
     laws: parsed.laws,

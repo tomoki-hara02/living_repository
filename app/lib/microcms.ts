@@ -24,7 +24,7 @@ export async function getRepositories(): Promise<Repository[]> {
 
   try {
     const res = await fetch(
-      `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-published_at`,
+      `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-publishedAt`,
       {
         headers: { "X-MICROCMS-API-KEY": apiKey },
         cache: "no-store",
