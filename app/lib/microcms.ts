@@ -18,21 +18,30 @@ function getApiKey(): string | null {
 export async function getRepositories(): Promise<Repository[]> {
   const apiKey = getApiKey();
   if (!apiKey) {
+    console.warn("[microcms] MICROCMS_API_KEY is not set — using dummy data");
     return dummyRepositories;
   }
 
-  const res = await fetch(
-    `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-published_at`,
-    {
-      headers: { "X-MICROCMS-API-KEY": apiKey },
-      cache: "no-store",
+  try {
+    const res = await fetch(
+      `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-published_at`,
+      {
+        headers: { "X-MICROCMS-API-KEY": apiKey },
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      console.error(`[microcms] getRepositories failed: ${res.status} ${res.statusText}`);
+      return dummyRepositories;
     }
-  );
 
-  if (!res.ok) throw new Error("Failed to fetch repositories");
-
-  const data: MicroCMSResponse<MicroCMSRawRepository> = await res.json();
-  return data.contents.map(normalizeRepository);
+    const data: MicroCMSResponse<MicroCMSRawRepository> = await res.json();
+    return data.contents.map(normalizeRepository);
+  } catch (err) {
+    console.error("[microcms] getRepositories error:", err);
+    return dummyRepositories;
+  }
 }
 
 export async function getRepositoryById(
@@ -40,19 +49,28 @@ export async function getRepositoryById(
 ): Promise<Repository | null> {
   const apiKey = getApiKey();
   if (!apiKey) {
+    console.warn("[microcms] MICROCMS_API_KEY is not set — using dummy data");
     return dummyRepositories.find((r) => r.id === id) ?? null;
   }
 
-  const res = await fetch(`${MICROCMS_API_BASE}/${ENDPOINT}/${id}`, {
-    headers: { "X-MICROCMS-API-KEY": apiKey },
-    next: {
-      revalidate: 10,
-      tags: [ENDPOINT, `${ENDPOINT}-${id}`],
-    },
-  });
+  try {
+    const res = await fetch(`${MICROCMS_API_BASE}/${ENDPOINT}/${id}`, {
+      headers: { "X-MICROCMS-API-KEY": apiKey },
+      next: {
+        revalidate: 10,
+        tags: [ENDPOINT, `${ENDPOINT}-${id}`],
+      },
+    });
 
-  if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`[microcms] getRepositoryById(${id}) failed: ${res.status} ${res.statusText}`);
+      return null;
+    }
 
-  const raw: MicroCMSRawRepository = await res.json();
-  return normalizeRepository(raw);
+    const raw: MicroCMSRawRepository = await res.json();
+    return normalizeRepository(raw);
+  } catch (err) {
+    console.error(`[microcms] getRepositoryById(${id}) error:`, err);
+    return null;
+  }
 }
