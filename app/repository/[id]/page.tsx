@@ -6,6 +6,7 @@ import { ChevronRight, Calendar, ArrowRight } from "lucide-react";
 import { getRepositoryById, getRepositories } from "@/app/lib/microcms";
 import { ALL_MODELS, ALL_LAWS, ALL_LEVELS, stripHtml } from "@/app/lib/types";
 import type { Level } from "@/app/lib/types";
+import RelatedRepositoriesCarousel from "@/app/components/RelatedRepositoriesCarousel";
 
 const levelGradient: Record<Level, string> = {
   Beginner: "linear-gradient(135deg, #3b82f6, #06b6d4)",
@@ -233,49 +234,7 @@ export default async function RepositoryDetail({ params }: PageProps) {
             <h2 className="mb-6 text-lg font-bold text-gray-900 sm:text-xl">
               関連するユースケース
             </h2>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {relatedRepos.map((r) => (
-                <Link
-                  key={r.id}
-                  href={`/repository/${r.id}`}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg"
-                >
-                  {r.eyecatch && (
-                    <div className="relative h-32 overflow-hidden bg-slate-100">
-                      <Image
-                        src={r.eyecatch.url}
-                        alt={r.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <div className="flex flex-1 flex-col p-4">
-                    <div className="mb-1.5 flex flex-wrap gap-1">
-                      {r.level && (
-                        <span
-                          className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white"
-                          style={{ background: levelGradient[r.level] }}
-                        >
-                          {r.level}
-                        </span>
-                      )}
-                      {r.models.slice(0, 2).map((m) => (
-                        <span
-                          key={m}
-                          className="rounded-full bg-gradient-to-r from-blue-50 to-cyan-50 px-2 py-0.5 text-[10px] font-medium text-blue-700"
-                        >
-                          {m}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition-colors group-hover:text-blue-600">
-                      {r.title}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <RelatedRepositoriesCarousel relatedRepos={relatedRepos} />
           </div>
         )}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Repository } from "@/app/lib/types";
 import { ALL_MODELS, ALL_LAWS, ALL_LEVELS, stripHtml } from "@/app/lib/types";
 import TagFilter, { type FilterState } from "./TagFilter";
@@ -26,6 +26,9 @@ export default function RepositoryList({ repositories }: RepositoryListProps) {
     level: null,
   });
   const [keyword, setKeyword] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   const filtered = repositories.filter((r) => {
     if (keyword && !matchesKeyword(r, keyword)) return false;
@@ -42,6 +45,13 @@ export default function RepositoryList({ repositories }: RepositoryListProps) {
     if (filter.level !== null && r.level !== filter.level) return false;
     return true;
   });
+
+  useEffect(() => {
+    setActiveIndex(0);
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({ left: 0 });
+    }
+  }, [filtered.length]);
 
   return (
     <>
@@ -63,11 +73,86 @@ export default function RepositoryList({ repositories }: RepositoryListProps) {
           該当するユースケースが見つかりませんでした。
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {filtered.map((repo) => (
-            <RepositoryCard key={repo.id} repository={repo} />
-          ))}
-        </div>
+        <>
+          {/* Mobile: 横スクロールカルーセル */}
+          <div className="sm:hidden">
+            <div
+              ref={carouselRef}
+              className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              onScroll={() => {
+                if (rafRef.current !== null) return;
+                rafRef.current = window.requestAnimationFrame(() => {
+                  rafRef.current = null;
+                  const el = carouselRef.current;
+                  if (!el) return;
+                  const items = Array.from(el.children) as HTMLElement[];
+                  if (items.length === 0) return;
+                  const center = el.scrollLeft + el.clientWidth / 2;
+                  let nearestIdx = 0;
+                  let nearestDist = Number.POSITIVE_INFINITY;
+                  for (let i = 0; i < items.length; i++) {
+                    const dist = Math.abs(
+                      items[i].offsetLeft + items[i].clientWidth / 2 - center
+                    );
+                    if (dist < nearestDist) {
+                      nearestDist = dist;
+                      nearestIdx = i;
+                    }
+                  }
+                  setActiveIndex(nearestIdx);
+                });
+              }}
+            >
+              {filtered.map((repo) => (
+                <div key={repo.id} className="w-[86%] flex-none snap-start">
+                  <RepositoryCard repository={repo} />
+                </div>
+              ))}
+            </div>
+
+            {filtered.length > 1 && (
+              <div className="mt-3 flex items-center justify-center gap-2">
+                {filtered.map((repo, idx) => {
+                  const isActive = idx === activeIndex;
+                  return (
+                    <button
+                      key={repo.id}
+                      type="button"
+                      aria-label={`スライド${idx + 1}`}
+                      aria-current={isActive}
+                      onClick={() => {
+                        const el = carouselRef.current;
+                        if (!el) return;
+                        const items = Array.from(
+                          el.children
+                        ) as HTMLElement[];
+                        const target = items[idx];
+                        if (!target) return;
+                        el.scrollTo({
+                          left: target.offsetLeft,
+                          behavior: "smooth",
+                        });
+                      }}
+                      className={[
+                        "h-1.5 rounded-full transition-all duration-300",
+                        isActive
+                          ? "w-2.5 bg-blue-600"
+                          : "w-1.5 bg-slate-300",
+                      ].join(" ")}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Desktop: グリッド */}
+          <div className="hidden gap-4 sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            {filtered.map((repo) => (
+              <RepositoryCard key={repo.id} repository={repo} />
+            ))}
+          </div>
+        </>
       )}
     </>
   );
