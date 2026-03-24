@@ -12,17 +12,17 @@ export const ALL_MODELS = [
   "Gemini",
   "Cursor",
   "NotebookLM",
-  "Midjourney",
+  "Perplexity",
   "ローカルLLM",
+  "Midjourney",
 ] as const;
 
 export const ALL_LAWS = [
   "個人情報保護法",
   "著作権法",
   "不正競争防止法",
-  "守秘義務",
   "民法/商法",
-  "その他",
+  "その他法令/利用規約",
 ] as const;
 
 export const ALL_LEVELS: Level[] = ["Beginner", "Standard", "Advanced"];
