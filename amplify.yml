@@ -7,6 +7,7 @@ frontend:
     build:
       commands:
         - echo "MICROCMS_API_KEY=$MICROCMS_API_KEY" >> .env.production
+        - echo "MICROCMS_ROADMAP_API_KEY=$MICROCMS_ROADMAP_API_KEY" >> .env.production
         - echo "REVALIDATE_SECRET=$REVALIDATE_SECRET" >> .env.production
         - npm run build
   artifacts:

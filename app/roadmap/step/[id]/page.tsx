@@ -51,7 +51,8 @@ export default async function RoadmapStepDetail({ params }: PageProps) {
 
   if (!step) notFound();
 
-  const themeInfo = step.theme ? THEME_LABELS[step.theme] : null;
+  const themeKey = Array.isArray(step.theme) ? step.theme[0] : step.theme;
+  const themeInfo = themeKey ? THEME_LABELS[themeKey] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-cyan-50 pt-20">
