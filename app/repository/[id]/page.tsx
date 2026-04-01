@@ -70,7 +70,7 @@ export default async function RepositoryDetail({ params }: PageProps) {
               ホーム
             </Link>
             <ChevronRight size={14} />
-            <Link href="/#repositories" className="transition-colors hover:text-blue-600">
+            <Link href="/repository#repositories" className="transition-colors hover:text-blue-600">
               一覧
             </Link>
             <ChevronRight size={14} />
@@ -241,7 +241,7 @@ export default async function RepositoryDetail({ params }: PageProps) {
         {/* 一覧に戻る */}
         <div className="mt-8 pt-6 text-center">
           <Link
-            href="/#repositories"
+            href="/repository#repositories"
             className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-blue-600"
           >
             ← ユースケース一覧に戻る

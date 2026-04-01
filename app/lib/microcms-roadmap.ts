@@ -127,27 +127,49 @@ const dummySteps: RoadmapStep[] = [
 // ─────────────────────────────────────────────
 // フェッチャー
 // ─────────────────────────────────────────────
+export async function getRoadmapStepById(id: string): Promise<RoadmapStep | null> {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    return dummySteps.find((s) => s.id === id) ?? null;
+  }
+
+  try {
+    const res = await fetch(`${MICROCMS_API_BASE}/${ENDPOINT}/${id}`, {
+      headers: { "X-MICROCMS-API-KEY": apiKey },
+      next: { revalidate: 60, tags: [ENDPOINT, `${ENDPOINT}-${id}`] },
+    });
+
+    if (!res.ok) {
+      console.error(`[microcms-roadmap] getRoadmapStepById(${id}) failed: ${res.status}`);
+      return null;
+    }
+
+    const raw: MicroCMSRawRoadmapStep = await res.json();
+    return normalizeRoadmapStep(raw);
+  } catch (err) {
+    console.error(`[microcms-roadmap] getRoadmapStepById(${id}) error:`, err);
+    return null;
+  }
+}
+
 export async function getRoadmapSteps(theme?: string): Promise<RoadmapStep[]> {
   const apiKey = getApiKey();
   if (!apiKey) {
     console.warn("[microcms-roadmap] MICROCMS_API_KEY is not set — using dummy data");
-    return theme ? dummySteps.filter((s) => !theme || s.theme === theme) : dummySteps;
+    return theme ? dummySteps.filter((s) => s.theme?.includes(theme)) : dummySteps;
   }
 
   try {
+    // theme は配列型で返るため [contains] でフィルタ、JS側も includes で確認
     const query = theme
-      ? `limit=100&orders=chapterNumber&filters=theme[contains]${theme}`
+      ? `limit=100&orders=chapterNumber&filters=theme[contains]${encodeURIComponent(theme)}`
       : "limit=100&orders=chapterNumber";
 
     const res = await fetch(
       `${MICROCMS_API_BASE}/${ENDPOINT}?${query}`,
       {
-        headers: {
-          "X-MICROCMS-API-KEY": apiKey,
-          "Cache-Control": "no-store, no-cache",
-        },
+        headers: { "X-MICROCMS-API-KEY": apiKey },
         cache: "no-store",
-        next: { revalidate: 0 },
       }
     );
 
@@ -161,8 +183,9 @@ export async function getRoadmapSteps(theme?: string): Promise<RoadmapStep[]> {
     }
 
     const data: MicroCMSResponse<MicroCMSRawRoadmapStep> = await res.json();
-    console.log(`[microcms-roadmap] fetched ${data.contents.length} steps`);
-    return data.contents.map(normalizeRoadmapStep);
+    const all = data.contents.map(normalizeRoadmapStep);
+    console.log(`[microcms-roadmap] fetched ${all.length} steps (theme: ${theme ?? "all"})`);
+    return all;
   } catch (err) {
     console.error("[microcms-roadmap] getRoadmapSteps error:", err);
     return dummySteps;

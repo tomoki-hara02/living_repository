@@ -72,7 +72,7 @@ export default function Header() {
                   shouldBeTransparent ? "text-white/80" : "text-gray-600"
                 }`}
               >
-                Legal Office (members)
+                Members
               </span>
             </span>
           </Link>
@@ -80,9 +80,21 @@ export default function Header() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6 pr-4">
 
-            {/* Living Repository */}
+            {/* ホーム */}
             <Link
               href="/"
+              className={`text-sm font-normal tracking-wider transition-colors duration-300 ${
+                shouldBeTransparent
+                  ? "text-white hover:text-white/90"
+                  : "text-gray-600 hover:text-emerald-600"
+              }`}
+            >
+              ホーム
+            </Link>
+
+            {/* Living Repository */}
+            <Link
+              href="/repository"
               className={`text-sm font-normal tracking-wider transition-colors duration-300 ${
                 shouldBeTransparent
                   ? "text-white hover:text-white/90"
@@ -202,6 +214,13 @@ export default function Header() {
           <nav className="flex flex-col py-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
             <Link
               href="/"
+              className="border-b border-gray-100/50 px-6 py-4 font-medium text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              ホーム
+            </Link>
+            <Link
+              href="/repository"
               className="border-b border-gray-100/50 px-6 py-4 font-medium text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
               onClick={() => setIsMenuOpen(false)}
             >

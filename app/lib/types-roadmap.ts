@@ -4,7 +4,7 @@ export type { Level };
 
 export interface RoadmapStep {
   id: string;
-  theme?: string;
+  theme?: string[];
   chapterNumber: number;
   title: string;
   summary: string;
@@ -22,12 +22,13 @@ export interface RoadmapStep {
 /** microCMS から返ってくる生データ（フィールドIDそのまま） */
 export interface MicroCMSRawRoadmapStep {
   id: string;
-  theme?: string;
+  theme?: string[];
   chapterNumber: number;
   title: string;
   summary?: string;
   contents?: string;
-  level?: Level;
+  /** MicroCMS のセレクト型は配列で返るため string[] も許容する */
+  level?: Level | string[];
   tools?: string[];
   laws?: string[];
   legalNote?: string;
@@ -35,6 +36,17 @@ export interface MicroCMSRawRoadmapStep {
   publishedAt?: string;
   createdAt?: string;
   updatedAt?: string;
+}
+
+/** MicroCMS のセレクト型は配列で返ることがあるため先頭要素を取り出す */
+function resolveLevel(raw: Level | string[] | undefined): Level {
+  if (!raw) return "Beginner";
+  if (Array.isArray(raw)) {
+    const first = raw[0] as string;
+    if (first === "Standard" || first === "Advanced") return first;
+    return "Beginner";
+  }
+  return raw;
 }
 
 export function normalizeRoadmapStep(raw: MicroCMSRawRoadmapStep): RoadmapStep {
@@ -45,7 +57,7 @@ export function normalizeRoadmapStep(raw: MicroCMSRawRoadmapStep): RoadmapStep {
     title: raw.title,
     summary: raw.summary ?? "",
     contents: raw.contents ?? "",
-    level: raw.level ?? "Beginner",
+    level: resolveLevel(raw.level),
     tools: raw.tools ?? [],
     laws: raw.laws ?? [],
     legalNote: raw.legalNote ?? "",

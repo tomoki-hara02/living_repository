@@ -57,24 +57,6 @@ export default function RoadmapPage() {
               各ステップの法務ポイントとあわせて整理しています
             </p>
 
-            {/* CTA ボタン */}
-            <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-              <a
-                href="#roadmap"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 shadow-lg transition-all duration-300 hover:bg-blue-50 hover:shadow-xl sm:px-8 sm:py-4 sm:text-base"
-              >
-                ロードマップを見る
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
-              </a>
-              <a
-                href="/"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/20 sm:px-8 sm:py-4 sm:text-base"
-              >
-                ← ユースケース一覧へ
-              </a>
-            </div>
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section className="bg-gray-50 py-12 sm:py-24">
+    <section className="py-12 sm:py-24" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #e8f4fd 50%, #f0fdfa 100%)" }}>
       <div className="container mx-auto px-4 sm:px-6">
         {/* セクション見出し */}
         <div className="mb-8 text-center sm:mb-12">
@@ -18,7 +18,7 @@ export default function AboutSection() {
         <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="flex items-center justify-center">
             <Image
-              src="/living-repository-digital-library-hero.png"
+              src="/images/about/section-repository.png"
               alt="Living Repository コンセプトイメージ"
               width={1024}
               height={576}
@@ -55,7 +55,7 @@ export default function AboutSection() {
             各レポジトリの読み方
           </h3>
 
-          <div className="mx-auto max-w-4xl space-y-4 sm:space-y-6">
+          <div className="mx-auto max-w-4xl space-y-8 sm:space-y-12">
             {/* 使用モデル */}
             <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
               <div className="h-1" style={{ background: "linear-gradient(to right, #3b82f6, #06b6d4)" }} />

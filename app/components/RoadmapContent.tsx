@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { RoadmapStep, Level } from "@/app/lib/types-roadmap";
 
 const LEVEL_STYLE: Record<Level, { label: string; bg: string; text: string; border: string; gradient: string }> = {
@@ -34,9 +35,12 @@ type ViewMode = "gallery" | "list";
 
 // ─── ギャラリーカード（Notion スタイル）───
 function GalleryCard({ step }: { step: RoadmapStep }) {
-  const lv = LEVEL_STYLE[step.level];
+  const lv = LEVEL_STYLE[step.level] ?? LEVEL_STYLE["Standard"];
   return (
-    <div className="group flex flex-col overflow-hidden rounded-xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer">
+    <Link
+      href={`/roadmap/step/${step.id}`}
+      className="group flex flex-col overflow-hidden rounded-xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+    >
       {/* アイキャッチ */}
       <div className="relative h-40 overflow-hidden sm:h-44">
         {step.eyecatch ? (
@@ -69,15 +73,18 @@ function GalleryCard({ step }: { step: RoadmapStep }) {
           {step.title}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 }
 
 // ─── リストカード ───
 function ListCard({ step }: { step: RoadmapStep }) {
-  const lv = LEVEL_STYLE[step.level];
+  const lv = LEVEL_STYLE[step.level] ?? LEVEL_STYLE["Standard"];
   return (
-    <div className="group overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+    <Link
+      href={`/roadmap/step/${step.id}`}
+      className="group overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg block"
+    >
       <div className="flex gap-0">
         {/* 左：アイキャッチ */}
         <div className="relative w-32 shrink-0 overflow-hidden sm:w-48">
@@ -110,9 +117,6 @@ function ListCard({ step }: { step: RoadmapStep }) {
               >
                 {step.chapterNumber}
               </div>
-              <span className={`rounded-md border px-2 py-0.5 text-[11px] font-bold ${lv.bg} ${lv.text} ${lv.border}`}>
-                {lv.label}
-              </span>
               <h3 className="text-sm font-bold text-gray-900 sm:text-base">{step.title}</h3>
             </div>
             <p className="mb-3 text-xs leading-relaxed text-gray-500 sm:text-sm line-clamp-2">
@@ -136,7 +140,7 @@ function ListCard({ step }: { step: RoadmapStep }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

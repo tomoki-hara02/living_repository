@@ -18,14 +18,15 @@ export default function RoadmapAboutSection() {
         <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
           {/* 左：ビジュアル */}
           <div className="flex items-center justify-center">
-            <Image
-              src="/images/about/From First Prompt to Full Integration.png"
-              alt="From First Prompt to Full Integration"
-              width={1024}
-              height={576}
-              className="h-auto w-full max-w-md rounded-2xl lg:max-w-full"
-              priority
-            />
+            <div className="relative w-full max-w-md overflow-hidden rounded-2xl lg:max-w-full" style={{ aspectRatio: "16/9" }}>
+              <Image
+                src="/images/about/section-roadmap.png"
+                alt="導入ロードマップ コンセプトイメージ"
+                fill
+                className="object-cover object-center scale-[1.12]"
+                priority
+              />
+            </div>
           </div>
 
           {/* 右：テキスト */}

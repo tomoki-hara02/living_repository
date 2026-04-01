@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Download, Lock, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import FormatsAboutSection from "@/app/components/FormatsAboutSection";
 
 export const metadata: Metadata = {
   title: "書式一覧 | Living Repository | tAiL. Legal Office",
@@ -175,7 +176,7 @@ export default function FormatsPage() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom right, #1e3a5f, #1e40af, #3b82f6)",
+                "linear-gradient(to bottom right, #1e1b4b, #312e81, #4338ca)",
             }}
           />
           <div className="absolute inset-0 bg-black/20" />
@@ -211,6 +212,9 @@ export default function FormatsPage() {
           aria-hidden
         />
       </div>
+
+      {/* ===== About ===== */}
+      <FormatsAboutSection />
 
       {/* ===== ご利用について ===== */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">

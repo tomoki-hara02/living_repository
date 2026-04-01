@@ -1,76 +1,130 @@
 import Link from "next/link";
+import Image from "next/image";
+import { ExternalLink } from "lucide-react";
 
-const mainNavigation = [
+const navigation = [
   { name: "ホーム", href: "/" },
-  { name: "リポジトリ一覧", href: "/#repositories" },
-  { name: "tail-legal.jp", href: "https://tail-legal.jp" },
+  { name: "Living Repository", href: "/repository" },
+  { name: "導入ロードマップ", href: "/roadmap" },
+  { name: "書式一覧", href: "/formats" },
 ];
 
-const businessHours = {
-  weekday: "平日 10:00～17:00",
-  weekend: "土日祝：要相談",
-};
+const roadmapThemes = [
+  { name: "ウェブマーケティング", href: "/roadmap/web-marketing" },
+  { name: "経理サポート", href: "/roadmap/accounting" },
+  { name: "営業・提案活動", href: "/roadmap/sales" },
+  { name: "契約法務", href: "/roadmap/legal" },
+];
 
 export default function Footer() {
   return (
     <footer className="bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-8 mb-6 md:grid-cols-2">
-          {/* メインメニュー */}
+      <div className="container mx-auto px-4 py-12 sm:py-16">
+
+        {/* 上段 */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+
+          {/* ブランド */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="relative h-9 w-9 overflow-hidden rounded-lg">
+                <Image
+                  src="/images/brand/logo.png"
+                  alt="tAiL. Legal Office Logo"
+                  width={36}
+                  height={36}
+                />
+              </div>
+              <span className="text-base font-bold text-white">
+                tAiL.{" "}
+                <span className="font-normal text-gray-400">Members</span>
+              </span>
+            </Link>
+            <p className="mt-4 text-xs leading-relaxed text-gray-500">
+              生成AI活用に必要な実践ユースケース、導入ロードマップ、法的書式を一元提供するメンバー向けポータルです。
+            </p>
+            <a
+              href="https://tail-legal.jp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-1 text-xs text-gray-500 transition-colors hover:text-blue-400"
+            >
+              本体サイト
+              <ExternalLink size={11} />
+            </a>
+          </div>
+
+          {/* メインナビ */}
           <div>
-            <h3 className="text-base font-semibold text-white mb-4 flex items-center">
-              <svg className="w-4 h-4 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-              メインメニュー
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
+              Menu
             </h3>
-            <ul className="space-y-2">
-              {mainNavigation.map((item) => {
-                const isExternal = item.href.startsWith("http");
-                const LinkTag = isExternal ? "a" : Link;
-                const extraProps = isExternal
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {};
-                return (
-                  <li key={item.href}>
-                    <LinkTag
-                      href={item.href}
-                      className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-200 flex items-center"
-                      {...extraProps}
-                    >
-                      <span className="w-1 h-1 bg-blue-500 rounded-full mr-2" />
-                      {item.name}
-                    </LinkTag>
-                  </li>
-                );
-              })}
+            <ul className="space-y-2.5">
+              {navigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-blue-400"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-blue-600" />
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* 営業時間 */}
+          {/* ロードマップテーマ */}
           <div>
-            <h3 className="text-base font-semibold text-white mb-4 flex items-center">
-              <svg className="w-4 h-4 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-              営業時間
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
+              Roadmap Themes
             </h3>
-            <div className="text-sm text-gray-400 space-y-1">
-              <p>{businessHours.weekday}</p>
-              <p>{businessHours.weekend}</p>
+            <ul className="space-y-2.5">
+              {roadmapThemes.map((theme) => (
+                <li key={theme.href}>
+                  <Link
+                    href={theme.href}
+                    className="flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-blue-400"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-cyan-600" />
+                    {theme.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 営業情報 */}
+          <div>
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
+              Office
+            </h3>
+            <div className="space-y-2 text-sm text-gray-500">
+              <p>tAiL. 法律事務所</p>
+              <p>福岡県福岡市中央区<br />桜坂1丁目3-14</p>
+              <p className="pt-1">平日 10:00〜17:00</p>
+              <p>土日祝：要相談</p>
             </div>
+          </div>
+
+        </div>
+
+        {/* 下段 */}
+        <div className="mt-12 border-t border-gray-800 pt-6">
+          <div className="flex flex-col items-center justify-between gap-2 text-xs text-gray-600 sm:flex-row">
+            <p>&copy; {new Date().getFullYear()} tAiL. Legal Office. All rights reserved.</p>
+            <a
+              href="https://tail-legal.jp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 transition-colors hover:text-gray-400"
+            >
+              tail-legal.jp
+              <ExternalLink size={10} />
+            </a>
           </div>
         </div>
 
-        {/* コピーライト */}
-        <div className="border-t border-gray-800 pt-4">
-          <div className="flex flex-col items-center justify-center text-xs text-gray-500 md:flex-row md:justify-between">
-            <p className="mb-2 md:mb-0">
-              &copy; {new Date().getFullYear()} tAiL. Legal Office. All rights reserved.
-            </p>
-            <p className="text-gray-400">福岡県福岡市中央区桜坂1丁目3-14</p>
-          </div>
-        </div>
       </div>
     </footer>
   );
