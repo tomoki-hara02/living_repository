@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 
 const roadmapThemes = [
+  { name: "汎用生成AI活用の基礎", href: "/roadmap/ai-general", live: true },
+  { name: "Cursor活用の基礎", href: "/roadmap/cursor", live: true },
   { name: "ウェブマーケティング", href: "/roadmap/web-marketing", live: true },
   { name: "経理サポート", href: "/roadmap/accounting", live: true },
   { name: "営業・提案活動", href: "/roadmap/sales", live: true },
   { name: "契約法務", href: "/roadmap/legal", live: true },
-  { name: "Coming Soon", href: "/roadmap", live: false },
-  { name: "Coming Soon", href: "/roadmap", live: false },
 ];
 
 export default function Header() {

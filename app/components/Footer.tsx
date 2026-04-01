@@ -10,6 +10,8 @@ const navigation = [
 ];
 
 const roadmapThemes = [
+  { name: "汎用生成AI活用の基礎", href: "/roadmap/ai-general" },
+  { name: "Cursor活用の基礎", href: "/roadmap/cursor" },
   { name: "ウェブマーケティング", href: "/roadmap/web-marketing" },
   { name: "経理サポート", href: "/roadmap/accounting" },
   { name: "営業・提案活動", href: "/roadmap/sales" },

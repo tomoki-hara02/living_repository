@@ -19,6 +19,32 @@ type Theme = {
 const themes: Theme[] = [
   {
     index: "01",
+    category: "AI General",
+    title: "汎用生成AI活用の基礎",
+    benefit: "ChatGPT・Claude・Geminiを使いこなし、業務効率化の土台を作る",
+    description:
+      "主要生成AIツールの特徴比較から、効果的なプロンプト設計・情報収集・文書作成への応用・業務フローへの組み込み・社内AI活用ルール整備まで、AI活用の基礎を体系的に学ぶロードマップ。",
+    image: "/images/roadmap-themes/AI General.png",
+    gradient: "from-purple-100 via-violet-50 to-fuchsia-100",
+    accentColor: "text-purple-600",
+    badge: "公開中",
+    href: "/roadmap/ai-general",
+  },
+  {
+    index: "02",
+    category: "Cursor",
+    title: "Cursor活用の基礎",
+    benefit: "AIコードエディタCursorで、ノンエンジニアでもWebサイトを内製化",
+    description:
+      "Cursorの基本操作・チャット・Composer・MCP活用まで、プログラミング未経験でもAIとの対話でWebサイトやツールを作成できるようになるロードマップ。",
+    image: "/images/roadmap-themes/Cursor.png",
+    gradient: "from-slate-200 via-gray-100 to-sky-100",
+    accentColor: "text-sky-700",
+    badge: "公開中",
+    href: "/roadmap/cursor",
+  },
+  {
+    index: "03",
     category: "Web Marketing",
     title: "ウェブマーケティング",
     benefit: "ウェブ構築、分析～コンテンツ更新までを生成AIで丸ごと自動化",
@@ -31,7 +57,7 @@ const themes: Theme[] = [
     href: "/roadmap/web-marketing",
   },
   {
-    index: "02",
+    index: "04",
     category: "Estimate & Accounting",
     title: "経理サポート",
     benefit: "見積書・請求書の作成から経費管理まで、経理業務をAIで効率化",
@@ -44,7 +70,7 @@ const themes: Theme[] = [
     href: "/roadmap/accounting",
   },
   {
-    index: "03",
+    index: "05",
     category: "Sales & Proposal",
     title: "営業・提案活動",
     benefit: "提案資料の作成から商談フォローまで、営業活動をAIがまるごと支援",
@@ -57,7 +83,7 @@ const themes: Theme[] = [
     href: "/roadmap/sales",
   },
   {
-    index: "04",
+    index: "06",
     category: "Contract & Legal",
     title: "契約法務",
     benefit: "契約書レビューから社内規程整備まで、法務業務をAIでサポート",
@@ -68,26 +94,6 @@ const themes: Theme[] = [
     accentColor: "text-slate-600",
     badge: "公開中",
     href: "/roadmap/legal",
-  },
-  {
-    index: "05",
-    category: "Coming Soon",
-    title: "Coming Soon",
-    benefit: "新テーマを準備中です",
-    description: "近日公開予定のロードマップテーマです。お楽しみに。",
-    gradient: "from-gray-100 via-gray-50 to-gray-100",
-    accentColor: "text-gray-400",
-    badge: "近日公開",
-  },
-  {
-    index: "06",
-    category: "Coming Soon",
-    title: "Coming Soon",
-    benefit: "新テーマを準備中です",
-    description: "近日公開予定のロードマップテーマです。お楽しみに。",
-    gradient: "from-gray-100 via-gray-50 to-gray-100",
-    accentColor: "text-gray-400",
-    badge: "近日公開",
   },
 ];
 
@@ -187,6 +193,7 @@ export default function RoadmapThemeCards() {
                   fill
                   className="object-cover"
                   key={theme.index}
+                  unoptimized
                 />
               ) : (
                 <div className="flex h-full items-center justify-center p-12">

@@ -16,6 +16,8 @@ const levelGradient: Record<Level, string> = {
 
 
 const THEME_LABELS: Record<string, { label: string; href: string }> = {
+  "ai-general":    { label: "汎用生成AI活用の基礎", href: "/roadmap/ai-general" },
+  "cursor":        { label: "Cursor活用の基礎",     href: "/roadmap/cursor" },
   "web-marketing": { label: "ウェブマーケティング", href: "/roadmap/web-marketing" },
   "accounting":    { label: "経理サポート",         href: "/roadmap/accounting" },
   "sales":         { label: "営業・提案活動",        href: "/roadmap/sales" },
