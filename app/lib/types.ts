@@ -47,8 +47,8 @@ export interface MicroCMSRawRepository {
   id: string;
   title: string;
   comment?: string;
-  summary: string;
-  contents: string;
+  summary?: string;
+  contents?: string;
   publishedAt?: string;
   tags?: string[];
   eyecatch?: MicroCMSImage;
@@ -95,6 +95,8 @@ export function normalizeRepository(raw: MicroCMSRawRepository): Repository {
   return {
     ...raw,
     comment: raw.comment ?? "",
+    summary: raw.summary ?? "",
+    contents: raw.contents ?? "",
     published_at: raw.publishedAt ?? raw.createdAt ?? "",
     tags: raw.tags ?? [],
     models: parsed.models,
@@ -103,7 +105,8 @@ export function normalizeRepository(raw: MicroCMSRawRepository): Repository {
   };
 }
 
-export function stripHtml(html: string): string {
+export function stripHtml(html: string | undefined | null): string {
+  if (!html) return "";
   return html
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")

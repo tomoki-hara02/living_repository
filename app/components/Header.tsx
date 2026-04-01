@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
@@ -19,10 +18,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const pathname = usePathname();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -41,7 +37,7 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const shouldBeTransparent = isHome && scrollY < 10 && !isRoadmapOpen;
+  const shouldBeTransparent = scrollY < 10 && !isRoadmapOpen;
 
   return (
     <header
@@ -76,7 +72,7 @@ export default function Header() {
                   shouldBeTransparent ? "text-white/80" : "text-gray-600"
                 }`}
               >
-                Legal Office
+                Legal Office (members)
               </span>
             </span>
           </Link>
@@ -157,6 +153,18 @@ export default function Header() {
               </div>
             </div>
 
+            {/* 書式一覧 */}
+            <Link
+              href="/formats"
+              className={`text-sm font-normal tracking-wider transition-colors duration-300 ${
+                shouldBeTransparent
+                  ? "text-white hover:text-white/90"
+                  : "text-gray-600 hover:text-emerald-600"
+              }`}
+            >
+              書式一覧
+            </Link>
+
             {/* 本体サイト */}
             <a
               href="https://tail-legal.jp"
@@ -228,6 +236,14 @@ export default function Header() {
                 ))}
               </ul>
             </div>
+
+            <Link
+              href="/formats"
+              className="border-b border-gray-100/50 px-6 py-4 font-medium text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              書式一覧
+            </Link>
 
             <a
               href="https://tail-legal.jp"
