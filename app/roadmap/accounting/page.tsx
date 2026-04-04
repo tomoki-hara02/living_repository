@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "経理サポート ロードマップ | Living Repository",
+  title: "経理サポート ロードマップ | tAiL. Members",
   description:
     "見積書・請求書の自動生成から経費管理・月次レポートの自動化まで、経理業務を生成AIで効率化するロードマップ。各チャプターの法務ポイント付き。",
 };

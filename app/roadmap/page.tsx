@@ -3,7 +3,7 @@ import RoadmapAboutSection from "@/app/components/RoadmapAboutSection";
 import RoadmapThemeCards from "@/app/components/RoadmapThemeCards";
 
 export const metadata: Metadata = {
-  title: "生成AI企業導入ロードマップ | Living Repository",
+  title: "生成AI企業導入ロードマップ | tAiL. Members",
   description:
     "ウェブマーケティングをテーマに、生成AIの活用を段階的にステップアップさせていくロードマップ。リサーチから自動化まで、法務面も含めて整理しています。",
 };

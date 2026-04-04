@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "契約法務 ロードマップ | Living Repository",
+  title: "契約法務 ロードマップ | tAiL. Members",
   description:
     "契約書レビューから社内規程整備まで、法務業務を生成AIでサポートするロードマップ。各チャプターの法務ポイント付き。",
 };

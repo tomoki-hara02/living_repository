@@ -38,7 +38,7 @@ function GalleryCard({ step }: { step: RoadmapStep }) {
   const lv = LEVEL_STYLE[step.level] ?? LEVEL_STYLE["Standard"];
   return (
     <Link
-      href={`/roadmap/step/${step.id}`}
+      href={`/roadmap/step/${step.slug}`}
       className="group flex flex-col overflow-hidden rounded-xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
     >
       {/* アイキャッチ */}
@@ -82,7 +82,7 @@ function ListCard({ step }: { step: RoadmapStep }) {
   const lv = LEVEL_STYLE[step.level] ?? LEVEL_STYLE["Standard"];
   return (
     <Link
-      href={`/roadmap/step/${step.id}`}
+      href={`/roadmap/step/${step.slug}`}
       className="group overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg block"
     >
       <div className="flex gap-0">

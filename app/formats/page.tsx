@@ -4,7 +4,7 @@ import Link from "next/link";
 import FormatsAboutSection from "@/app/components/FormatsAboutSection";
 
 export const metadata: Metadata = {
-  title: "書式一覧 | Living Repository | tAiL. Legal Office",
+  title: "書式一覧 | tAiL. Members",
   description:
     "生成AIの企業導入に必要なサンプル書式・契約書条項例・利用規程テンプレートをダウンロードできます。組織体制整備の参考にご活用ください。",
 };

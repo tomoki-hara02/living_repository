@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "汎用生成AI活用の基礎 ロードマップ | Living Repository",
+  title: "汎用生成AI活用の基礎 ロードマップ | tAiL. Members",
   description:
     "ChatGPT・Claude・Geminiなどの主要生成AIツールの特徴を理解し、プロンプト設計から業務フローへの組み込み・社内ルール整備まで、AI活用の基礎を体系的に学ぶロードマップ。",
 };

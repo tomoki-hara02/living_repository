@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "ウェブマーケティング ロードマップ | Living Repository",
+  title: "ウェブマーケティング ロードマップ | tAiL. Members",
   description:
     "自社ウェブマーケにおける情報収集から、内製化・分析・コンテンツ自動更新まで、生成AIで丸ごと自動化するロードマップ。各チャプターの法務ポイント付き。",
 };

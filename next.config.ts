@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "images.microcms-assets.io",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cms-assets.nilto.com",
+        pathname: "/**",
+      },
     ],
   },
   async headers() {

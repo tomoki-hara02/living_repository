@@ -12,8 +12,7 @@ type Theme = {
   image?: string;
   gradient: string;
   accentColor: string;
-  badge: string;
-  href?: string;
+  href: string;
 };
 
 const themes: Theme[] = [
@@ -27,7 +26,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/AI General.png",
     gradient: "from-purple-100 via-violet-50 to-fuchsia-100",
     accentColor: "text-purple-600",
-    badge: "公開中",
     href: "/roadmap/ai-general",
   },
   {
@@ -40,7 +38,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/Cursor.png",
     gradient: "from-slate-200 via-gray-100 to-sky-100",
     accentColor: "text-sky-700",
-    badge: "公開中",
     href: "/roadmap/cursor",
   },
   {
@@ -53,7 +50,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/Web Marketing Analytics.png",
     gradient: "from-sky-100 via-cyan-50 to-blue-100",
     accentColor: "text-cyan-600",
-    badge: "公開中",
     href: "/roadmap/web-marketing",
   },
   {
@@ -66,7 +62,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/Estimate Accounting.png",
     gradient: "from-amber-100 via-yellow-50 to-orange-100",
     accentColor: "text-amber-600",
-    badge: "公開中",
     href: "/roadmap/accounting",
   },
   {
@@ -79,7 +74,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/Sales Proposal.png",
     gradient: "from-violet-100 via-purple-50 to-indigo-100",
     accentColor: "text-violet-600",
-    badge: "公開中",
     href: "/roadmap/sales",
   },
   {
@@ -92,7 +86,6 @@ const themes: Theme[] = [
     image: "/images/roadmap-themes/Contract Legal.png",
     gradient: "from-slate-100 via-gray-50 to-blue-100",
     accentColor: "text-slate-600",
-    badge: "公開中",
     href: "/roadmap/legal",
   },
 ];
@@ -100,7 +93,6 @@ const themes: Theme[] = [
 export default function RoadmapThemeCards() {
   const [active, setActive] = useState(0);
   const theme = themes[active];
-  const isLive = theme.badge === "公開中";
 
   return (
     <section
@@ -136,16 +128,6 @@ export default function RoadmapThemeCards() {
                   <span className={`text-xs font-semibold uppercase tracking-widest ${theme.accentColor}`}>
                     {theme.category}
                   </span>
-                  {/* バッジ */}
-                  <span
-                    className={`ml-auto rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                      isLive
-                        ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200"
-                        : "bg-gray-50 text-gray-400 ring-1 ring-gray-200"
-                    }`}
-                  >
-                    {theme.badge}
-                  </span>
                 </div>
 
                 {/* タイトル */}
@@ -166,21 +148,15 @@ export default function RoadmapThemeCards() {
 
               {/* CTAボタン */}
               <div className="mt-8">
-                {isLive ? (
-                  <a
-                    href={theme.href}
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:border-cyan-300 hover:text-cyan-600"
-                  >
-                    ロードマップを見る
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                    </svg>
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50 px-6 py-2.5 text-sm font-medium text-gray-300">
-                    準備中
-                  </span>
-                )}
+                <a
+                  href={theme.href}
+                  className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:border-cyan-300 hover:text-cyan-600"
+                >
+                  ロードマップを見る
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                  </svg>
+                </a>
               </div>
             </div>
 

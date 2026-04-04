@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "営業・提案活動 ロードマップ | Living Repository",
+  title: "営業・提案活動 ロードマップ | tAiL. Members",
   description:
     "提案資料の作成から商談フォローまで、営業活動を生成AIでまるごと支援するロードマップ。各チャプターの法務ポイント付き。",
 };

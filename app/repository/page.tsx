@@ -6,7 +6,7 @@ import AboutSection from "@/app/components/AboutSection";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Living Repository | tAiL. Legal Office",
+  title: "Living Repository | tAiL. Members",
   description:
     "tAiL.法律事務所が提供する生成AI活用ユースケース集。法務・ビジネスにおけるAI活用の実践的なガイドを掲載しています。",
 };

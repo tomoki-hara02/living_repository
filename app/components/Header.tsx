@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 
 const roadmapThemes = [
-  { name: "汎用生成AI活用の基礎", href: "/roadmap/ai-general", live: true },
-  { name: "Cursor活用の基礎", href: "/roadmap/cursor", live: true },
-  { name: "ウェブマーケティング", href: "/roadmap/web-marketing", live: true },
-  { name: "経理サポート", href: "/roadmap/accounting", live: true },
-  { name: "営業・提案活動", href: "/roadmap/sales", live: true },
-  { name: "契約法務", href: "/roadmap/legal", live: true },
+  { name: "汎用生成AI活用の基礎", href: "/roadmap/ai-general" },
+  { name: "Cursor活用の基礎", href: "/roadmap/cursor" },
+  { name: "ウェブマーケティング", href: "/roadmap/web-marketing" },
+  { name: "経理サポート", href: "/roadmap/accounting" },
+  { name: "営業・提案活動", href: "/roadmap/sales" },
+  { name: "契約法務", href: "/roadmap/legal" },
 ];
 
 export default function Header() {
@@ -137,15 +137,6 @@ export default function Header() {
                           className="flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 transition-colors duration-150 hover:bg-gray-50 hover:text-cyan-600"
                         >
                           <span>{theme.name}</span>
-                          {theme.live ? (
-                            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 ring-1 ring-emerald-200">
-                              公開中
-                            </span>
-                          ) : (
-                            <span className="rounded-full bg-gray-50 px-2 py-0.5 text-[10px] font-medium text-gray-400 ring-1 ring-gray-200">
-                              準備中
-                            </span>
-                          )}
                         </Link>
                       </li>
                     ))}
@@ -245,11 +236,6 @@ export default function Header() {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <span>{theme.name}</span>
-                      {theme.live && (
-                        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
-                          公開中
-                        </span>
-                      )}
                     </Link>
                   </li>
                 ))}

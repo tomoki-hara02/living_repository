@@ -20,8 +20,8 @@ const notoSansJP = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   title: {
-    default: "生成AI活用 Living Repository | tAiL. Legal Office",
-    template: "%s | tAiL. Living Repository",
+    default: "tAiL. Members | tAiL. Legal Office",
+    template: "%s | tAiL. Members",
   },
   description:
     "tAiL.法律事務所が提供する生成AI活用ユースケース集。法務・ビジネスにおけるAI活用の実践的なガイドを掲載しています。",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    siteName: "tAiL. Living Repository",
+    siteName: "tAiL. Members",
   },
 };
 

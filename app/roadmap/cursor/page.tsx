@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { getRoadmapSteps } from "@/app/lib/microcms-roadmap";
+import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Cursor活用の基礎 ロードマップ | Living Repository",
+  title: "Cursor活用の基礎 ロードマップ | tAiL. Members",
   description:
     "AIコードエディタCursorの基本操作からチャット・Composer・MCP活用まで、ノンエンジニアでも実践できるCursor活用の基礎を学ぶロードマップ。",
 };
