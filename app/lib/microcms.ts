@@ -27,7 +27,7 @@ export async function getRepositories(): Promise<Repository[]> {
       `${MICROCMS_API_BASE}/${ENDPOINT}?limit=100&orders=-publishedAt`,
       {
         headers: { "X-MICROCMS-API-KEY": apiKey },
-        cache: "no-store",
+        next: { revalidate: 60, tags: [ENDPOINT] },
       }
     );
 
