@@ -7,8 +7,9 @@ frontend:
     build:
       commands:
         - echo "MICROCMS_API_KEY=$MICROCMS_API_KEY" >> .env.production
-        - echo "MICROCMS_ROADMAP_API_KEY=$MICROCMS_ROADMAP_API_KEY" >> .env.production
         - echo "REVALIDATE_SECRET=$REVALIDATE_SECRET" >> .env.production
+        - echo "NILTO_API_KEY=$NILTO_API_KEY" >> .env.production
+        - echo "NILTO_SPACE_ID=$NILTO_SPACE_ID" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
