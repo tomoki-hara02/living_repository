@@ -1,6 +1,6 @@
 import TopAboutCarousel from "@/app/components/TopAboutCarousel";
 import NewsSection from "@/app/components/NewsSection";
-import { getNewsItems } from "@/app/lib/microcms-news";
+import { getNewsItems } from "@/app/lib/nilto-news";
 
 export const revalidate = 0;
 

@@ -1,4 +1,5 @@
-import type { NewsItem } from "@/app/lib/microcms-news";
+import Link from "next/link";
+import type { NewsItem } from "@/app/lib/nilto-news";
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -34,9 +35,18 @@ export default function NewsSection({ news }: { news: NewsItem[] }) {
               >
                 {formatDate(item.date)}
               </time>
-              <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
-                {item.title}
-              </p>
+              {item.roadmapSlug ? (
+                <Link
+                  href={`/roadmap/step/${item.roadmapSlug}`}
+                  className="text-sm leading-relaxed text-blue-600 underline-offset-2 hover:underline sm:text-base"
+                >
+                  {item.title}
+                </Link>
+              ) : (
+                <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
+                  {item.title}
+                </p>
+              )}
             </li>
           ))}
         </ul>
