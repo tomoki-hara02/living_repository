@@ -64,7 +64,7 @@ function VideoPlayer({ videoUrl }: { videoUrl: string }) {
   if (youtubeId) {
     return (
       <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200">
-        <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+        <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
           <iframe
             className="absolute inset-0 h-full w-full"
             src={`https://www.youtube.com/embed/${youtubeId}`}
