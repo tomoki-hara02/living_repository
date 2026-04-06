@@ -79,7 +79,7 @@ export async function getNewsItems(): Promise<NewsItem[]> {
 
     const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
       headers: { "X-NILTO-API-KEY": apiKey },
-      next: { revalidate: 60, tags: [MODEL_LUID] },
+      next: { revalidate: 0, tags: [MODEL_LUID] },
     });
 
     if (!res.ok) {

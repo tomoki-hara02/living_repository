@@ -25,6 +25,28 @@ export async function POST(request: NextRequest) {
       pathsToRevalidate.push("/");
     }
 
+    // NILTO: ロードマップステップ更新
+    if (body.api === "roadmap_step" || body.model === "roadmap_step") {
+      tagsToRevalidate.push("roadmap_step");
+      if (body.slug) {
+        tagsToRevalidate.push(`roadmap_step-${body.slug}`);
+        pathsToRevalidate.push(`/roadmap/step/${body.slug}`);
+      }
+      pathsToRevalidate.push("/roadmap");
+      pathsToRevalidate.push("/roadmap/ai-general");
+      pathsToRevalidate.push("/roadmap/cursor");
+      pathsToRevalidate.push("/roadmap/web-marketing");
+      pathsToRevalidate.push("/roadmap/accounting");
+      pathsToRevalidate.push("/roadmap/sales");
+      pathsToRevalidate.push("/roadmap/legal");
+    }
+
+    // NILTO: お知らせ更新
+    if (body.api === "news" || body.model === "news") {
+      tagsToRevalidate.push("news");
+      pathsToRevalidate.push("/");
+    }
+
     const uniqueTags = [...new Set(tagsToRevalidate)];
     const uniquePaths = [...new Set(pathsToRevalidate)];
 
