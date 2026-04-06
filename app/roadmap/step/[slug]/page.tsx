@@ -264,7 +264,7 @@ export default async function RoadmapStepDetail({ params }: PageProps) {
 
         {/* 概要ボックス */}
         {step.summary && (
-          <div className="mb-8 rounded-2xl border border-cyan-200 bg-gradient-to-r from-cyan-50 to-blue-50 p-5 sm:p-6">
+          <div className="mt-10 mb-8 rounded-2xl border border-cyan-200 bg-gradient-to-r from-cyan-50 to-blue-50 p-5 sm:p-6">
             <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cyan-600">
               Summary
             </span>
