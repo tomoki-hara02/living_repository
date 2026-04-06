@@ -103,7 +103,7 @@ export async function getRoadmapStepBySlug(
 
     const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
       headers: { "X-NILTO-API-KEY": apiKey },
-      next: { revalidate: 60, tags: [MODEL_LUID, `${MODEL_LUID}-${slug}`] },
+      cache: "no-store",
     });
 
     if (!res.ok) {

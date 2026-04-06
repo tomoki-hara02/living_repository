@@ -8,7 +8,7 @@ import {
 } from "@/app/lib/nilto-roadmap";
 import type { RoadmapStep } from "@/app/lib/types-roadmap";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 /** NILTO theme フィールドの日本語値 → 一覧ページへのマッピング */
 const THEME_LABELS: Record<string, { label: string; href: string }> = {
