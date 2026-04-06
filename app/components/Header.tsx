@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
+
+type HeaderProps = {
+  /** false のとき常に背景付き（透過しない） */
+  transparent?: boolean;
+};
 
 const roadmapThemes = [
   { name: "汎用生成AI活用の基礎", href: "/roadmap/ai-general" },
@@ -14,30 +19,21 @@ const roadmapThemes = [
   { name: "契約法務", href: "/roadmap/legal" },
 ];
 
-export default function Header() {
+export default function Header({ transparent = true }: HeaderProps) {
+  const [isAtTop, setIsAtTop] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // ドロップダウン外クリックで閉じる
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsRoadmapOpen(false);
-      }
+    const handleScroll = () => {
+      setIsAtTop(window.scrollY < 10);
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const shouldBeTransparent = scrollY < 10 && !isRoadmapOpen;
+  const shouldBeTransparent = transparent && isAtTop;
 
   return (
     <header
@@ -62,13 +58,13 @@ export default function Header() {
               />
             </div>
             <span
-              className={`text-lg font-bold whitespace-nowrap ${
+              className={`text-lg font-bold whitespace-nowrap transition-colors duration-300 ${
                 shouldBeTransparent ? "text-white" : "text-blue-900"
               }`}
             >
               tAiL.{" "}
               <span
-                className={`font-normal ${
+                className={`font-normal transition-colors duration-300 ${
                   shouldBeTransparent ? "text-white/80" : "text-gray-600"
                 }`}
               >
@@ -92,7 +88,7 @@ export default function Header() {
               ホーム
             </Link>
 
-            {/* Living Repository */}
+            {/* 実践ユースケース集 */}
             <Link
               href="/repository"
               className={`text-sm font-normal tracking-wider transition-colors duration-300 ${
@@ -101,7 +97,7 @@ export default function Header() {
                   : "text-gray-600 hover:text-emerald-600"
               }`}
             >
-              Living Repository
+              実践ユースケース集
             </Link>
 
             {/* 導入ロードマップ（CSS onlyドロップダウン） */}
@@ -215,7 +211,7 @@ export default function Header() {
               className="border-b border-gray-100/50 px-6 py-4 font-medium text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
               onClick={() => setIsMenuOpen(false)}
             >
-              Living Repository
+              実践ユースケース集
             </Link>
 
             {/* モバイル：ロードマップ + テーマ一覧 */}

@@ -10,7 +10,7 @@ export default function AboutSection() {
             About
           </span>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            リビングレポジトリとは？
+            実践ユースケース集とは？
           </h2>
         </div>
 
@@ -19,7 +19,7 @@ export default function AboutSection() {
           <div className="flex items-center justify-center">
             <Image
               src="/images/about/section-repository.png"
-              alt="Living Repository コンセプトイメージ"
+              alt="実践ユースケース集 コンセプトイメージ"
               width={1024}
               height={576}
               className="h-auto w-full max-w-md lg:max-w-full"
@@ -34,7 +34,7 @@ export default function AboutSection() {
             </h3>
             <div className="space-y-4 text-sm leading-relaxed text-gray-600 sm:text-base">
               <p>
-                Living Repository（リビングレポジトリ）は、tAiL.法律事務所が運営する、企業向けの生成AI活用ユースケース集です。
+                実践ユースケース集は、tAiL.法律事務所が運営する、企業向けの生成AI活用ユースケース集です。
               </p>
               <p>
                 「生成AIを導入したいが、何から始めればいいかわからない」「法的リスクが不安で踏み出せない」——そうした企業の声に応えるため、弁護士の視点で実務に即したユースケースをまとめています。
@@ -43,16 +43,16 @@ export default function AboutSection() {
                 各ユースケースでは、具体的な活用ステップ・推奨ツール・プロンプト例に加え、関連する法令や注意すべきリスクも併記。導入検討から実践までを一貫してサポートします。
               </p>
               <p>
-                コンテンツは継続的に更新・追加される「生きたレポジトリ」として、最新の生成AI活用情報を提供してまいります。
+                コンテンツは継続的に更新・追加され、最新の生成AI活用情報を提供してまいります。
               </p>
             </div>
           </div>
         </div>
 
-        {/* ===== 各レポジトリの読み方 ===== */}
+        {/* ===== 各ユースケースの読み方 ===== */}
         <div className="mt-12 sm:mt-20">
           <h3 className="mb-6 text-center text-lg font-bold text-gray-900 sm:mb-10 sm:text-xl">
-            各レポジトリの読み方
+            各ユースケースの読み方
           </h3>
 
           <div className="mx-auto max-w-4xl space-y-8 sm:space-y-12">
@@ -72,7 +72,7 @@ export default function AboutSection() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <div className="flex-1">
                     <p className="mb-3 text-sm leading-relaxed text-gray-600">
-                      このレポジトリを実践するのに適した生成AIモデル・サービスを示しています。色付きで表示されているモデルが推奨、灰色は今回の用途では不使用です。複数のモデルが色付きの場合、いずれでも実践可能です。
+                      このユースケースを実践するのに適した生成AIモデル・サービスを示しています。色付きで表示されているモデルが推奨、灰色は今回の用途では不使用です。複数のモデルが色付きの場合、いずれでも実践可能です。
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-medium text-blue-700">ChatGPT</span>
@@ -107,7 +107,7 @@ export default function AboutSection() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <div className="flex-1">
                     <p className="mb-3 text-sm leading-relaxed text-gray-600">
-                      このレポジトリを実践する際に留意すべき法令・リスク領域を示しています。色付きの項目が該当する法令です。実際の適用範囲は業種・利用形態によって異なりますので、詳細はご相談ください。
+                      このユースケースを実践する際に留意すべき法令・リスク領域を示しています。色付きの項目が該当する法令です。実際の適用範囲は業種・利用形態によって異なりますので、詳細はご相談ください。
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       <span className="rounded-full border border-pink-200 bg-pink-50 px-2.5 py-0.5 text-[11px] font-medium text-pink-700">個人情報保護法</span>
@@ -140,7 +140,7 @@ export default function AboutSection() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <div className="flex-1">
                     <p className="mb-3 text-sm leading-relaxed text-gray-600">
-                      このレポジトリの実施に必要な技術的ハードルの目安です。
+                      このユースケースの実施に必要な技術的ハードルの目安です。
                     </p>
                     <div className="space-y-2">
                       <div className="flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50/30 px-3 py-2">
@@ -184,24 +184,24 @@ export default function AboutSection() {
             <svg className="h-5 w-5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
             </svg>
-            <h4 className="text-sm font-bold text-red-600">レポジトリ参照にあたっての注意事項</h4>
+            <h4 className="text-sm font-bold text-red-600">ユースケース参照にあたっての注意事項</h4>
           </div>
           <ul className="space-y-2.5 text-xs leading-relaxed text-slate-500 sm:text-sm">
             <li className="flex gap-2">
               <span className="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300" />
-              本レポジトリの内容は、すべての環境で同じ結果が得られることを保証するものではありません。お使いのツール・プラン・社内体制などによって、実現できる範囲は異なります。
+              本ユースケースの内容は、すべての環境で同じ結果が得られることを保証するものではありません。お使いのツール・プラン・社内体制などによって、実現できる範囲は異なります。
             </li>
             <li className="flex gap-2">
               <span className="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300" />
-              各レポジトリに記載している「関連法令」や「リスク」は主要なものを示したものであり、実際のご利用にあたっては、ここに記載のないリスクが生じる可能性があります。
+              各ユースケースに記載している「関連法令」や「リスク」は主要なものを示したものであり、実際のご利用にあたっては、ここに記載のないリスクが生じる可能性があります。
             </li>
             <li className="flex gap-2">
               <span className="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300" />
-              本レポジトリの内容を参考に実践された結果について、tAiL.法律事務所は一切の責任を負いかねます。導入・運用にあたっては、必要に応じて専門家にご相談ください。
+              本ユースケースの内容を参考に実践された結果について、tAiL.法律事務所は一切の責任を負いかねます。導入・運用にあたっては、必要に応じて専門家にご相談ください。
             </li>
             <li className="flex gap-2">
               <span className="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300" />
-              生成AI技術は急速に進化しており、本レポジトリの内容が将来的に古くなったり、新たなリスクが生じる可能性があります。掲載日時をご確認のうえ、最新の情報と合わせてご活用ください。
+              生成AI技術は急速に進化しており、本ユースケースの内容が将来的に古くなったり、新たなリスクが生じる可能性があります。掲載日時をご確認のうえ、最新の情報と合わせてご活用ください。
             </li>
           </ul>
         </div>

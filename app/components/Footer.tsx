@@ -4,7 +4,7 @@ import { ExternalLink } from "lucide-react";
 
 const navigation = [
   { name: "ホーム", href: "/" },
-  { name: "Living Repository", href: "/repository" },
+  { name: "実践ユースケース集", href: "/repository" },
   { name: "導入ロードマップ", href: "/roadmap" },
   { name: "書式一覧", href: "/formats" },
 ];

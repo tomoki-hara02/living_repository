@@ -6,7 +6,7 @@ import AboutSection from "@/app/components/AboutSection";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Living Repository | tAiL. Members",
+  title: "実践ユースケース集 | tAiL. Members",
   description:
     "tAiL.法律事務所が提供する生成AI活用ユースケース集。法務・ビジネスにおけるAI活用の実践的なガイドを掲載しています。",
 };
@@ -37,14 +37,7 @@ export default async function RepositoryPage() {
                 className="inline-block align-baseline font-extrabold leading-none"
                 style={{ fontSize: "clamp(1.6em, 5vw, 2.4em)" }}
               >
-                Living
-              </span>
-              {" "}
-              <span
-                className="inline-block align-baseline font-extrabold leading-none"
-                style={{ fontSize: "clamp(1.6em, 5vw, 2.4em)" }}
-              >
-                Repository
+                実践ユースケース集
               </span>
             </h1>
 

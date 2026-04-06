@@ -5,7 +5,7 @@ const items = [
   {
     index: "01",
     step: "知る",
-    category: "Living Repository",
+    category: "実践ユースケース集",
     title: "実践ユースケース集",
     benefit: "生成AIの活用事例を法令・リスクと共に整理した実務ガイド",
     description:
