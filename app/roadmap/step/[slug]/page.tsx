@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { ChevronRight, ArrowRight, Download } from "lucide-react";
 import {
@@ -257,19 +256,11 @@ export default async function RoadmapStepDetail({ params }: PageProps) {
       {/* 本文エリア */}
       <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
 
-        {/* アイキャッチ */}
-        {step.eyecatch && (
-          <div className="mb-8 overflow-hidden rounded-xl sm:mb-10 sm:rounded-2xl">
-            <Image
-              src={step.eyecatch.url}
-              alt={step.eyecatch.alt ?? step.title}
-              width={step.eyecatch.width ?? 1200}
-              height={step.eyecatch.height ?? 630}
-              className="h-auto w-full"
-              priority
-            />
-          </div>
-        )}
+        {/* 動画プレイヤー */}
+        {step.videoUrl && <VideoPlayer videoUrl={step.videoUrl} />}
+
+        {/* 音声プレイヤー */}
+        <AudioPlayer step={step} />
 
         {/* 概要ボックス */}
         {step.summary && (
@@ -290,12 +281,6 @@ export default async function RoadmapStepDetail({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: step.contents }}
           />
         )}
-
-        {/* 動画プレイヤー */}
-        {step.videoUrl && <VideoPlayer videoUrl={step.videoUrl} />}
-
-        {/* 音声プレイヤー */}
-        <AudioPlayer step={step} />
 
         {/* 添付ファイルダウンロード */}
         {step.attachment && (
