@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag, revalidatePath } from "next/cache";
+import { updateTag, revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   try {
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const uniquePaths = [...new Set(pathsToRevalidate)];
 
     for (const tag of uniqueTags) {
-      revalidateTag(tag);
+      updateTag(tag);
     }
 
     for (const path of uniquePaths) {
