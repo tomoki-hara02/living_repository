@@ -5,11 +5,13 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    console.log("[revalidate] incoming payload:", JSON.stringify(body));
+
     const secret =
       body.secret || request.headers.get("x-webhook-secret");
 
     if (!secret || secret !== process.env.REVALIDATE_SECRET) {
-      console.error("Invalid secret token");
+      console.error("[revalidate] Invalid secret token");
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
@@ -59,13 +61,16 @@ export async function POST(request: NextRequest) {
       revalidatePath(path);
     }
 
+    console.log("[revalidate] done — tags:", uniqueTags, "paths:", uniquePaths);
+
     return NextResponse.json({
       revalidated: true,
       tags: uniqueTags,
       paths: uniquePaths,
       now: Date.now(),
     });
-  } catch {
+  } catch (err) {
+    console.error("[revalidate] error:", err);
     return NextResponse.json(
       { message: "Error revalidating" },
       { status: 500 }

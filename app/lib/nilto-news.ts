@@ -1,5 +1,6 @@
-const NILTO_API_BASE = "https://cms-api.nilto.com/v1" as const;
-const MODEL_LUID = "news";
+import { fetchNiltoContents } from "./nilto-client";
+
+const MODEL = "news";
 
 export type NewsItem = {
   id: string;
@@ -29,17 +30,6 @@ type NiltoRawNewsItem = {
   };
 };
 
-interface NiltoListResponse {
-  total: number;
-  limit: number;
-  offset: number;
-  data: NiltoRawNewsItem[];
-}
-
-function getApiKey(): string | null {
-  return process.env.NILTO_API_KEY ?? null;
-}
-
 const dummyNews: NewsItem[] = [
   {
     id: "news-01",
@@ -63,40 +53,18 @@ function normalizeNewsItem(raw: NiltoRawNewsItem): NewsItem {
 }
 
 export async function getNewsItems(): Promise<NewsItem[]> {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    console.warn("[nilto-news] NILTO_API_KEY is not set — using dummy data");
-    return dummyNews;
-  }
-
   try {
-    const params = new URLSearchParams({
-      model: MODEL_LUID,
+    const raw = await fetchNiltoContents<NiltoRawNewsItem>(MODEL, {
       lang: "ja",
       limit: "20",
       status: "published",
     });
 
-    const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
-      headers: { "X-NILTO-API-KEY": apiKey },
-      next: { revalidate: 0, tags: [MODEL_LUID] },
-    });
+    if (!raw) return dummyNews;
 
-    if (!res.ok) {
-      console.error(
-        `[nilto-news] getNewsItems failed: ${res.status} ${res.statusText}`
-      );
-      return dummyNews;
-    }
-
-    const data: NiltoListResponse = await res.json();
-
-    const items = data.data
+    return raw
       .map(normalizeNewsItem)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-    console.log(`[nilto-news] fetched ${items.length} news items`);
-    return items;
   } catch (err) {
     console.error("[nilto-news] getNewsItems error:", err);
     return dummyNews;

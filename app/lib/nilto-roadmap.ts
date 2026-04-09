@@ -1,11 +1,9 @@
 import type { RoadmapStep, NiltoRawRoadmapStep } from "./types-roadmap";
 import { normalizeRoadmapStep } from "./types-roadmap";
+import { fetchNiltoContents } from "./nilto-client";
 
-// 公式ドキュメントで確認済みの正しい API ベース URL
-const NILTO_API_BASE = "https://cms-api.nilto.com/v1" as const;
-const MODEL_LUID = "roadmap_step";
+const MODEL = "roadmap_step";
 
-/** テーマページのキー（英語）→ NILTO の theme フィールド選択肢（日本語）へのマッピング */
 const THEME_MAP: Record<string, string> = {
   "ai-general":    "汎用生成AI活用の基礎",
   "cursor":        "Cursor活用の基礎",
@@ -15,21 +13,6 @@ const THEME_MAP: Record<string, string> = {
   "legal":         "契約法務",
 };
 
-/** GET /v1/contents のレスポンス形式 */
-interface NiltoListResponse {
-  total: number;
-  offset: number;
-  limit: number;
-  data: NiltoRawRoadmapStep[];
-}
-
-function getApiKey(): string | null {
-  return process.env.NILTO_API_KEY ?? null;
-}
-
-// ─────────────────────────────────────────────
-// ダミーデータ（NILTO_API_KEY 未設定時の開発用）
-// ─────────────────────────────────────────────
 const dummySteps: RoadmapStep[] = [
   {
     id: "1",
@@ -78,45 +61,22 @@ const dummySteps: RoadmapStep[] = [
   },
 ];
 
-// ─────────────────────────────────────────────
-// フェッチャー
-// ─────────────────────────────────────────────
-
 /**
- * slug をフィルタキーにしてコンテンツを1件取得する。
- * GET https://cms-api.nilto.com/v1/contents?model=roadmap_step&slug[eq]={slug}&limit=1
+ * slug でコンテンツを1件取得する。
  */
 export async function getRoadmapStepBySlug(
-  slug: string
+  slug: string,
 ): Promise<RoadmapStep | null> {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    return dummySteps.find((s) => s.slug === slug) ?? null;
-  }
-
   try {
-    const params = new URLSearchParams({
-      model: MODEL_LUID,
+    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(MODEL, {
       "slug[eq]": slug,
       limit: "1",
     });
 
-    const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
-      headers: { "X-NILTO-API-KEY": apiKey },
-      cache: "no-store",
-    });
+    if (!raw) return dummySteps.find((s) => s.slug === slug) ?? null;
 
-    if (!res.ok) {
-      console.error(
-        `[nilto-roadmap] getRoadmapStepBySlug(${slug}) failed: ${res.status}`
-      );
-      return null;
-    }
-
-    const data: NiltoListResponse = await res.json();
-    const raw = data.data[0];
-    if (!raw) return null;
-    return normalizeRoadmapStep(raw);
+    const first = raw[0];
+    return first ? normalizeRoadmapStep(first) : null;
   } catch (err) {
     console.error(`[nilto-roadmap] getRoadmapStepBySlug(${slug}) error:`, err);
     return null;
@@ -125,53 +85,32 @@ export async function getRoadmapStepBySlug(
 
 /**
  * テーマでフィルタしてコンテンツ一覧を取得する。
- * GET https://cms-api.nilto.com/v1/contents?model=roadmap_step&order=chapter_number&theme[eq]={themeJa}
  * theme は英語キー（"accounting" など）を受け取り、日本語値に変換する。
  */
 export async function getRoadmapSteps(
-  theme?: string
+  theme?: string,
 ): Promise<RoadmapStep[]> {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    console.warn("[nilto-roadmap] NILTO_API_KEY is not set — using dummy data");
-    const themeJa = theme ? THEME_MAP[theme] : undefined;
-    return themeJa
-      ? dummySteps.filter((s) => s.theme === themeJa)
-      : dummySteps;
-  }
-
   try {
-    const params = new URLSearchParams({
-      model: MODEL_LUID,
+    const extra: Record<string, string> = {
       order: "chapter_number",
       limit: "100",
-    });
+    };
 
     if (theme) {
       const themeJa = THEME_MAP[theme];
-      if (themeJa) params.set("theme[eq]", themeJa);
+      if (themeJa) extra["theme[eq]"] = themeJa;
     }
 
-    const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
-      headers: { "X-NILTO-API-KEY": apiKey },
-      cache: "no-store",
-    });
+    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(MODEL, extra);
 
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      console.error(
-        `[nilto-roadmap] getRoadmapSteps failed: ${res.status} ${res.statusText}`,
-        body
-      );
-      return dummySteps;
+    if (!raw) {
+      const themeJa = theme ? THEME_MAP[theme] : undefined;
+      return themeJa
+        ? dummySteps.filter((s) => s.theme === themeJa)
+        : dummySteps;
     }
 
-    const data: NiltoListResponse = await res.json();
-    const all = data.data.map(normalizeRoadmapStep);
-    console.log(
-      `[nilto-roadmap] fetched ${all.length} steps (theme: ${theme ?? "all"})`
-    );
-    return all;
+    return raw.map(normalizeRoadmapStep);
   } catch (err) {
     console.error("[nilto-roadmap] getRoadmapSteps error:", err);
     return dummySteps;
