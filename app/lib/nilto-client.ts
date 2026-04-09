@@ -42,6 +42,12 @@ export async function fetchNiltoContents<TRaw>(
   }
 
   const data: NiltoListResponse<TRaw> = await res.json();
-  console.log(`[nilto] fetched ${data.data.length} items (model: ${model})`);
+  console.log(
+    `[nilto] fetched ${data.data.length} items (model: ${model}):`,
+    JSON.stringify(data.data.map((item) => {
+      const raw = item as Record<string, unknown>;
+      return { _id: raw._id, _title: raw._title, _status: raw._status };
+    })),
+  );
   return data.data;
 }
