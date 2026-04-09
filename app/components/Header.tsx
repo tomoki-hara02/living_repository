@@ -152,7 +152,7 @@ export default function Header({ transparent = true }: HeaderProps) {
               </div>
             </div>
 
-            {/* 書式一覧 */}
+            {/* 法務/書式 */}
             <Link
               href="/formats"
               className={`text-sm font-normal tracking-wider transition-colors duration-300 ${
@@ -161,7 +161,7 @@ export default function Header({ transparent = true }: HeaderProps) {
                   : "text-gray-600 hover:text-emerald-600"
               }`}
             >
-              書式一覧
+              法務/書式
             </Link>
 
             {/* 本体サイト */}
@@ -243,7 +243,7 @@ export default function Header({ transparent = true }: HeaderProps) {
               className="border-b border-gray-100/50 px-6 py-4 font-medium text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
               onClick={() => setIsMenuOpen(false)}
             >
-              書式一覧
+              法務/書式
             </Link>
 
             <a

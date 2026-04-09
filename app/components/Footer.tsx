@@ -6,7 +6,7 @@ const navigation = [
   { name: "ホーム", href: "/" },
   { name: "実践ユースケース集", href: "/repository" },
   { name: "導入ロードマップ", href: "/roadmap" },
-  { name: "書式一覧", href: "/formats" },
+  { name: "法務/書式", href: "/formats" },
 ];
 
 const roadmapThemes = [
@@ -43,7 +43,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 text-xs leading-relaxed text-gray-500">
-              生成AI活用に必要な実践ユースケース、導入ロードマップ、法的書式を一元提供するメンバー向けポータルです。
+              生成AI活用に必要な実践ユースケース、導入ロードマップ、法務解説・規程など幅広いリーガル情報を一元提供するメンバー向けポータルです。
             </p>
             <a
               href="https://tail-legal.jp"

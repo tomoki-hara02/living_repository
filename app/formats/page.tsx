@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
-import { Download, Lock, ChevronRight } from "lucide-react";
+import { Download, Lock, ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
 import FormatsAboutSection from "@/app/components/FormatsAboutSection";
+import { getLegalContents } from "@/app/lib/nilto-legal";
+import {
+  LEGAL_CATEGORY_LABELS,
+  LEGAL_CATEGORY_ICONS,
+  LEGAL_CATEGORY_COLORS,
+  LEGAL_CATEGORY_ACCENTS,
+  LEGAL_CATEGORY_ORDER,
+  type LegalContent,
+} from "@/app/lib/types-legal";
 
 export const metadata: Metadata = {
-  title: "書式一覧 | tAiL. Members",
+  title: "法務/書式 | tAiL. Members",
   description:
     "生成AIの企業導入に必要なサンプル書式・契約書条項例・利用規程テンプレートをダウンロードできます。組織体制整備の参考にご活用ください。",
 };
@@ -166,7 +175,75 @@ const fileTypeBadge: Record<string, string> = {
   PDF: "bg-red-100 text-red-700",
 };
 
-export default function FormatsPage() {
+function CmsContentSection({ contents }: { contents: LegalContent[] }) {
+  const grouped = LEGAL_CATEGORY_ORDER.map((cat) => ({
+    category: cat,
+    label: LEGAL_CATEGORY_LABELS[cat],
+    icon: LEGAL_CATEGORY_ICONS[cat],
+    color: LEGAL_CATEGORY_COLORS[cat],
+    accent: LEGAL_CATEGORY_ACCENTS[cat],
+    items: contents.filter((c) => c.category === cat),
+  })).filter((g) => g.items.length > 0);
+
+  return (
+    <section id="formats" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+      <div className="space-y-16">
+        {grouped.map((group) => (
+          <div key={group.category}>
+            <div className="mb-6 flex items-center gap-3">
+              <span className="text-3xl">{group.icon}</span>
+              <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
+                {group.label}
+              </h2>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {group.items.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/formats/${item.slug}`}
+                  className={`group flex flex-col rounded-2xl border border-gray-100 bg-gradient-to-br p-5 transition-all duration-200 hover:border-gray-300 hover:shadow-md ${group.color}`}
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <span
+                      className={`rounded-full bg-white/70 px-2.5 py-0.5 text-[10px] font-semibold ring-1 ring-gray-200 ${group.accent}`}
+                    >
+                      {group.label}
+                    </span>
+                    {item.file && (
+                      <span className="inline-flex items-center gap-0.5 rounded bg-blue-100 px-2 py-0.5 text-[10px] font-bold tracking-wider text-blue-700">
+                        <FileText size={9} />
+                        DL可
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="text-sm font-semibold leading-snug text-gray-900 transition-colors sm:text-base group-hover:text-indigo-700">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 flex-1 line-clamp-3 text-xs leading-relaxed text-gray-500 sm:text-sm">
+                    {item.summary}
+                  </p>
+
+                  <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${group.accent}`}>
+                    詳細を見る
+                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default async function FormatsPage() {
+  const cmsContents = await getLegalContents();
+
   return (
     <div className="bg-white">
       {/* ===== Hero ===== */}
@@ -189,11 +266,11 @@ export default function FormatsPage() {
           <div className="max-w-3xl text-white">
             <h1 className="text-lg font-bold leading-tight tracking-tight sm:text-2xl md:text-3xl lg:text-4xl">
               <span className="block mb-2">生成AI活用</span>
-              <span
+                <span
                 className="inline-block align-baseline font-extrabold leading-none"
                 style={{ fontSize: "clamp(1.6em, 5vw, 2.4em)" }}
               >
-                書式一覧
+                法務/書式
               </span>
             </h1>
 
@@ -246,87 +323,91 @@ export default function FormatsPage() {
         </div>
       </section>
 
-      {/* ===== カテゴリ別書式一覧 ===== */}
-      <section id="formats" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
-        <div className="space-y-16">
-          {categories.map((cat) => (
-            <div key={cat.id}>
-              {/* カテゴリヘッダー */}
-              <div className="mb-6 flex items-center gap-3">
-                <span className="text-3xl">{cat.icon}</span>
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
-                    {cat.label}
-                  </h2>
-                  <p className="mt-0.5 text-sm text-gray-500">{cat.description}</p>
+      {/* ===== カテゴリ別法務/書式 ===== */}
+      {cmsContents.length > 0 ? (
+        <CmsContentSection contents={cmsContents} />
+      ) : (
+        <section id="formats" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+          <div className="space-y-16">
+            {categories.map((cat) => (
+              <div key={cat.id}>
+                {/* カテゴリヘッダー */}
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="text-3xl">{cat.icon}</span>
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
+                      {cat.label}
+                    </h2>
+                    <p className="mt-0.5 text-sm text-gray-500">{cat.description}</p>
+                  </div>
+                </div>
+
+                {/* ドキュメントカード */}
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {cat.docs.map((doc, i) => (
+                    <div
+                      key={i}
+                      className={`group relative flex flex-col rounded-2xl border bg-gradient-to-br p-5 transition-all duration-200 ${cat.color} ${
+                        doc.status === "available"
+                          ? "cursor-pointer border-gray-200 hover:border-gray-300 hover:shadow-md"
+                          : "border-gray-100"
+                      }`}
+                    >
+                      {/* ファイルタイプ＆ステータスバッジ */}
+                      <div className="mb-3 flex items-center gap-2">
+                        {doc.fileType && (
+                          <span
+                            className={`rounded px-2 py-0.5 text-[10px] font-bold tracking-wider ${
+                              fileTypeBadge[doc.fileType] ?? "bg-gray-100 text-gray-600"
+                            }`}
+                          >
+                            {doc.fileType}
+                          </span>
+                        )}
+                        {doc.status === "available" ? (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 ring-1 ring-emerald-200">
+                            ダウンロード可
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-gray-400 ring-1 ring-gray-200">
+                            準備中
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-sm font-semibold leading-snug text-gray-900 sm:text-base">
+                        {doc.title}
+                      </h3>
+                      <p className="mt-2 flex-1 text-xs leading-relaxed text-gray-500 sm:text-sm">
+                        {doc.description}
+                      </p>
+
+                      {/* ダウンロードボタン */}
+                      <div className="mt-4">
+                        {doc.status === "available" && doc.href ? (
+                          <a
+                            href={doc.href}
+                            download
+                            className={`inline-flex items-center gap-1.5 rounded-full ${cat.accent} px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:opacity-90`}
+                          >
+                            <Download size={12} />
+                            ダウンロード
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-gray-400">
+                            <Lock size={12} />
+                            準備中
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {/* ドキュメントカード */}
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {cat.docs.map((doc, i) => (
-                  <div
-                    key={i}
-                    className={`group relative flex flex-col rounded-2xl border bg-gradient-to-br p-5 transition-all duration-200 ${cat.color} ${
-                      doc.status === "available"
-                        ? "cursor-pointer border-gray-200 hover:border-gray-300 hover:shadow-md"
-                        : "border-gray-100"
-                    }`}
-                  >
-                    {/* ファイルタイプ＆ステータスバッジ */}
-                    <div className="mb-3 flex items-center gap-2">
-                      {doc.fileType && (
-                        <span
-                          className={`rounded px-2 py-0.5 text-[10px] font-bold tracking-wider ${
-                            fileTypeBadge[doc.fileType] ?? "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {doc.fileType}
-                        </span>
-                      )}
-                      {doc.status === "available" ? (
-                        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 ring-1 ring-emerald-200">
-                          ダウンロード可
-                        </span>
-                      ) : (
-                        <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-gray-400 ring-1 ring-gray-200">
-                          準備中
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-sm font-semibold leading-snug text-gray-900 sm:text-base">
-                      {doc.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-xs leading-relaxed text-gray-500 sm:text-sm">
-                      {doc.description}
-                    </p>
-
-                    {/* ダウンロードボタン */}
-                    <div className="mt-4">
-                      {doc.status === "available" && doc.href ? (
-                        <a
-                          href={doc.href}
-                          download
-                          className={`inline-flex items-center gap-1.5 rounded-full ${cat.accent} px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:opacity-90`}
-                        >
-                          <Download size={12} />
-                          ダウンロード
-                        </a>
-                      ) : (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-gray-400">
-                          <Lock size={12} />
-                          準備中
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ===== 個別相談CTA ===== */}
       <section className="bg-gradient-to-br from-blue-900 to-indigo-900 py-20">

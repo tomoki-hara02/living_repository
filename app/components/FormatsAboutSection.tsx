@@ -10,7 +10,7 @@ export default function FormatsAboutSection() {
             About
           </span>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            書式一覧とは？
+            法務/書式とは？
           </h2>
         </div>
 
@@ -19,7 +19,7 @@ export default function FormatsAboutSection() {
           <div className="flex items-center justify-center">
             <Image
               src="/images/about/section-formats.png"
-              alt="書式一覧 コンセプトイメージ"
+              alt="法務/書式 コンセプトイメージ"
               width={1024}
               height={576}
               className="h-auto w-full max-w-md lg:max-w-full"
@@ -34,7 +34,7 @@ export default function FormatsAboutSection() {
             </h3>
             <div className="space-y-4 text-sm leading-relaxed text-gray-600 sm:text-base">
               <p>
-                書式一覧は、tAiL.法律事務所が提供する生成AI導入に必要な規程・契約書・書式のサンプル集です。
+                法務/書式は、tAiL.法律事務所が提供する生成AI導入に必要な法務解説・規程・契約書・書式のサンプル集です。
               </p>
               <p>
                 「活用方法は分かった、では社内体制をどう整えるか」——そのフェーズで必要となるAI利用規程、契約書条項例、リスク評価チェックリストなどをダウンロード形式でご提供します。
