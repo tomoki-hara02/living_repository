@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import RoadmapAboutSection from "@/app/components/RoadmapAboutSection";
 import RoadmapThemeCards from "@/app/components/RoadmapThemeCards";
 
 export const metadata: Metadata = {
@@ -67,9 +66,6 @@ export default function RoadmapPage() {
           aria-hidden
         />
       </div>
-
-      {/* ===== About ===== */}
-      <RoadmapAboutSection />
 
       {/* ===== Theme Cards ===== */}
       <div id="roadmap">

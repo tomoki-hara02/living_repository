@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Download, FileText, Calendar } from "lucide-react";
 import { getLegalContentBySlug, getAllLegalSlugs } from "@/app/lib/nilto-legal";
+
+export const revalidate = 60;
 import {
   LEGAL_CATEGORY_LABELS,
   LEGAL_CATEGORY_ICONS,

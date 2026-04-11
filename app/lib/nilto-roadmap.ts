@@ -68,10 +68,11 @@ export async function getRoadmapStepBySlug(
   slug: string,
 ): Promise<RoadmapStep | null> {
   try {
-    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(MODEL, {
-      "slug[eq]": slug,
-      limit: "1",
-    });
+    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(
+      MODEL,
+      { "slug[eq]": slug, limit: "1" },
+      { revalidate: 60, tags: ["roadmap_step", `roadmap_step-${slug}`] },
+    );
 
     if (!raw) return dummySteps.find((s) => s.slug === slug) ?? null;
 
@@ -101,7 +102,11 @@ export async function getRoadmapSteps(
       if (themeJa) extra["theme[eq]"] = themeJa;
     }
 
-    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(MODEL, extra);
+    const raw = await fetchNiltoContents<NiltoRawRoadmapStep>(
+      MODEL,
+      extra,
+      { revalidate: 60, tags: ["roadmap_step"] },
+    );
 
     if (!raw) {
       const themeJa = theme ? THEME_MAP[theme] : undefined;

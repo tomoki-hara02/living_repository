@@ -27,7 +27,11 @@ export async function getLegalContents(
       extra["category[eq]"] = category;
     }
 
-    const raw = await fetchNiltoContents<NiltoRawLegalContent>(MODEL, extra);
+    const raw = await fetchNiltoContents<NiltoRawLegalContent>(
+      MODEL,
+      extra,
+      { revalidate: 60, tags: ["legal_content"] },
+    );
     if (!raw) return [];
 
     return raw.map(normalizeLegalContent);
@@ -45,12 +49,11 @@ export async function getLegalContentBySlug(
   slug: string,
 ): Promise<LegalContent | null> {
   try {
-    const raw = await fetchNiltoContents<NiltoRawLegalContent>(MODEL, {
-      lang: "ja",
-      "slug[eq]": slug,
-      limit: "1",
-      status: "published",
-    });
+    const raw = await fetchNiltoContents<NiltoRawLegalContent>(
+      MODEL,
+      { lang: "ja", "slug[eq]": slug, limit: "1", status: "published" },
+      { revalidate: 60, tags: ["legal_content", `legal_content-${slug}`] },
+    );
 
     if (!raw || raw.length === 0) return null;
     return normalizeLegalContent(raw[0]);

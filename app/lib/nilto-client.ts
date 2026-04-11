@@ -7,6 +7,11 @@ export interface NiltoListResponse<T> {
   data: T[];
 }
 
+export interface NiltoCacheOptions {
+  revalidate?: number;
+  tags?: string[];
+}
+
 export function getNiltoApiKey(): string | null {
   return process.env.NILTO_API_KEY ?? null;
 }
@@ -14,10 +19,14 @@ export function getNiltoApiKey(): string | null {
 /**
  * NILTO の GET /v1/contents を呼び出す汎用フェッチャー。
  * API キー未設定時は null を返すので、呼び出し側でダミーデータにフォールバックする。
+ *
+ * cacheOptions を指定すると Next.js Data Cache + タグベース再検証が有効になる。
+ * 省略時はモデル名をタグとして revalidate: 60 で動作する。
  */
 export async function fetchNiltoContents<TRaw>(
   model: string,
   extraParams?: Record<string, string>,
+  cacheOptions?: NiltoCacheOptions,
 ): Promise<TRaw[] | null> {
   const apiKey = getNiltoApiKey();
   if (!apiKey) {
@@ -27,9 +36,18 @@ export async function fetchNiltoContents<TRaw>(
 
   const params = new URLSearchParams({ model, ...extraParams });
 
+  const isDev = process.env.NODE_ENV === "development";
+
   const res = await fetch(`${NILTO_API_BASE}/contents?${params}`, {
     headers: { "X-NILTO-API-KEY": apiKey },
-    cache: "no-store",
+    ...(isDev
+      ? { cache: "no-store" }
+      : {
+          next: {
+            revalidate: cacheOptions?.revalidate ?? 60,
+            tags: cacheOptions?.tags ?? [model],
+          },
+        }),
   });
 
   if (!res.ok) {

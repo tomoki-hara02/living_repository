@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Download, Lock, ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
-import FormatsAboutSection from "@/app/components/FormatsAboutSection";
 import { getLegalContents } from "@/app/lib/nilto-legal";
+
+export const revalidate = 60;
 import {
   LEGAL_CATEGORY_LABELS,
   LEGAL_CATEGORY_ICONS,
@@ -183,7 +184,7 @@ function CmsContentSection({ contents }: { contents: LegalContent[] }) {
     color: LEGAL_CATEGORY_COLORS[cat],
     accent: LEGAL_CATEGORY_ACCENTS[cat],
     items: contents.filter((c) => c.category === cat),
-  })).filter((g) => g.items.length > 0);
+  }));
 
   return (
     <section id="formats" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
@@ -197,43 +198,53 @@ function CmsContentSection({ contents }: { contents: LegalContent[] }) {
               </h2>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {group.items.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/formats/${item.slug}`}
-                  className={`group flex flex-col rounded-2xl border border-gray-100 bg-gradient-to-br p-5 transition-all duration-200 hover:border-gray-300 hover:shadow-md ${group.color}`}
-                >
-                  <div className="mb-3 flex items-center gap-2">
-                    <span
-                      className={`rounded-full bg-white/70 px-2.5 py-0.5 text-[10px] font-semibold ring-1 ring-gray-200 ${group.accent}`}
-                    >
-                      {group.label}
-                    </span>
-                    {item.file && (
-                      <span className="inline-flex items-center gap-0.5 rounded bg-blue-100 px-2 py-0.5 text-[10px] font-bold tracking-wider text-blue-700">
-                        <FileText size={9} />
-                        DL可
+            {group.items.length > 0 ? (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/formats/${item.slug}`}
+                    className={`group flex flex-col rounded-2xl border border-gray-100 bg-gradient-to-br p-5 transition-all duration-200 hover:border-gray-300 hover:shadow-md ${group.color}`}
+                  >
+                    <div className="mb-3 flex items-center gap-2">
+                      <span
+                        className={`rounded-full bg-white/70 px-2.5 py-0.5 text-[10px] font-semibold ring-1 ring-gray-200 ${group.accent}`}
+                      >
+                        {group.label}
                       </span>
-                    )}
-                  </div>
+                      {item.file && (
+                        <span className="inline-flex items-center gap-0.5 rounded bg-blue-100 px-2 py-0.5 text-[10px] font-bold tracking-wider text-blue-700">
+                          <FileText size={9} />
+                          DL可
+                        </span>
+                      )}
+                    </div>
 
-                  <h3 className="text-sm font-semibold leading-snug text-gray-900 transition-colors sm:text-base group-hover:text-indigo-700">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 flex-1 line-clamp-3 text-xs leading-relaxed text-gray-500 sm:text-sm">
-                    {item.summary}
-                  </p>
+                    <h3 className="text-sm font-semibold leading-snug text-gray-900 transition-colors sm:text-base group-hover:text-indigo-700">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 flex-1 line-clamp-3 text-xs leading-relaxed text-gray-500 sm:text-sm">
+                      {item.summary}
+                    </p>
 
-                  <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${group.accent}`}>
-                    詳細を見る
-                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                    </svg>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                    <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${group.accent}`}>
+                      詳細を見る
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className={`flex items-center gap-4 rounded-2xl border border-dashed border-gray-200 bg-gradient-to-br p-6 ${group.color}`}>
+                <Lock className="h-5 w-5 shrink-0 text-gray-300" />
+                <div>
+                  <p className="text-sm font-medium text-gray-400">Coming Soon</p>
+                  <p className="mt-0.5 text-xs text-gray-400">このカテゴリのコンテンツは現在準備中です。公開までしばらくお待ちください。</p>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -289,9 +300,6 @@ export default async function FormatsPage() {
           aria-hidden
         />
       </div>
-
-      {/* ===== About ===== */}
-      <FormatsAboutSection />
 
       {/* ===== ご利用について ===== */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">

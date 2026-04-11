@@ -2,55 +2,11 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section className="py-12 sm:py-24" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #e8f4fd 50%, #f0fdfa 100%)" }}>
+    <section className="py-12 sm:py-20" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #e8f4fd 50%, #f0fdfa 100%)" }}>
       <div className="container mx-auto px-4 sm:px-6">
-        {/* セクション見出し */}
-        <div className="mb-8 text-center sm:mb-12">
-          <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-            About
-          </span>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            実践ユースケース集とは？
-          </h2>
-        </div>
-
-        {/* 2カラムレイアウト */}
-        <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="flex items-center justify-center">
-            <Image
-              src="/images/about/section-repository.png"
-              alt="実践ユースケース集 コンセプトイメージ"
-              width={1024}
-              height={576}
-              className="h-auto w-full max-w-md lg:max-w-full"
-              priority
-            />
-          </div>
-          <div>
-            <h3 className="mb-4 text-lg font-bold leading-snug text-gray-900 sm:text-xl">
-              生成AIの活用事例を
-              <br />
-              法令・リスクと共に整理した実務ガイド
-            </h3>
-            <div className="space-y-4 text-sm leading-relaxed text-gray-600 sm:text-base">
-              <p>
-                実践ユースケース集は、tAiL.法律事務所が運営する、企業向けの生成AI活用ユースケース集です。
-              </p>
-              <p>
-                「生成AIを導入したいが、何から始めればいいかわからない」「法的リスクが不安で踏み出せない」——そうした企業の声に応えるため、弁護士の視点で実務に即したユースケースをまとめています。
-              </p>
-              <p>
-                各ユースケースでは、具体的な活用ステップ・推奨ツール・プロンプト例に加え、関連する法令や注意すべきリスクも併記。導入検討から実践までを一貫してサポートします。
-              </p>
-              <p>
-                コンテンツは継続的に更新・追加され、最新の生成AI活用情報を提供してまいります。
-              </p>
-            </div>
-          </div>
-        </div>
 
         {/* ===== 各ユースケースの読み方 ===== */}
-        <div className="mt-12 sm:mt-20">
+        <div>
           <h3 className="mb-6 text-center text-lg font-bold text-gray-900 sm:mb-10 sm:text-xl">
             各ユースケースの読み方
           </h3>

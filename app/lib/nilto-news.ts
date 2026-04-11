@@ -8,6 +8,8 @@ export type NewsItem = {
   title: string;
   /** content_1 が公開済み roadmap_step を参照している場合のslug */
   roadmapSlug?: string;
+  /** content_1 が公開済み legal_content を参照している場合のslug */
+  legalSlug?: string;
   createdAt?: string;
 };
 
@@ -43,22 +45,27 @@ function normalizeNewsItem(raw: NiltoRawNewsItem): NewsItem {
     raw.content_1?._model === "roadmap_step" &&
     raw.content_1?._status === "published";
 
+  const isLinkedLegal =
+    raw.content_1?._model === "legal_content" &&
+    raw.content_1?._status === "published";
+
   return {
     id: String(raw._id),
     date: raw.date_time_1,
     title: raw.single_line_1,
     roadmapSlug: isLinkedStep ? raw.content_1!._title : undefined,
+    legalSlug: isLinkedLegal ? raw.content_1!._title : undefined,
     createdAt: raw._created_at,
   };
 }
 
 export async function getNewsItems(): Promise<NewsItem[]> {
   try {
-    const raw = await fetchNiltoContents<NiltoRawNewsItem>(MODEL, {
-      lang: "ja",
-      limit: "20",
-      status: "published",
-    });
+    const raw = await fetchNiltoContents<NiltoRawNewsItem>(
+      MODEL,
+      { lang: "ja", limit: "20", status: "published" },
+      { revalidate: 60, tags: ["news"] },
+    );
 
     if (!raw) return dummyNews;
 

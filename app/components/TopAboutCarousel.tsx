@@ -66,12 +66,12 @@ export default function TopAboutSection() {
             About
           </p>
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            tAiL. Members について
+            このサイトについて
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-500 sm:text-base">
             企業の生成AI導入を「知る」「実装する」「整える」の3フェーズで
             <br />
-            一元的にサポートするメンバー向けポータルです。
+            一元的にサポートする、無料の実践ポータルです。
           </p>
           <div className="mt-5 h-px bg-gray-100" />
         </div>

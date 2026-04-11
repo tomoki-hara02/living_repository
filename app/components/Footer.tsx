@@ -43,7 +43,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 text-xs leading-relaxed text-gray-500">
-              生成AI活用に必要な実践ユースケース、導入ロードマップ、法務解説・規程など幅広いリーガル情報を一元提供するメンバー向けポータルです。
+              生成AI活用に必要な実践ユースケース、導入ロードマップ、法務解説・規程など幅広いリーガル情報を無料で一元提供するポータルです。
             </p>
             <a
               href="https://tail-legal.jp"

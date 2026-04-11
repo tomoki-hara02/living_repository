@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getRoadmapSteps } from "@/app/lib/nilto-roadmap";
 import RoadmapContent from "@/app/components/RoadmapContent";
 
-export const revalidate = 0;
+export const revalidate = 60;
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {

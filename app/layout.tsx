@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | tAiL. Members",
   },
   description:
-    "tAiL.法律事務所が提供する生成AI活用ユースケース集。法務・ビジネスにおけるAI活用の実践的なガイドを掲載しています。",
+    "企業の生成AI導入を支援する実践ポータル。ユースケース集・導入ロードマップ・法務書式をすべて無料でご利用いただけます。",
   icons: {
     icon: "/favicon.ico",
     apple: "/images/brand/logo.png",

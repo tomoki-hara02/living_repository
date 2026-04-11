@@ -49,6 +49,16 @@ export async function POST(request: NextRequest) {
       pathsToRevalidate.push("/");
     }
 
+    // NILTO: 法務/書式更新
+    if (body.api === "legal_content" || body.model === "legal_content") {
+      tagsToRevalidate.push("legal_content");
+      if (body.slug) {
+        tagsToRevalidate.push(`legal_content-${body.slug}`);
+        pathsToRevalidate.push(`/formats/${body.slug}`);
+      }
+      pathsToRevalidate.push("/formats");
+    }
+
     const uniqueTags = [...new Set(tagsToRevalidate)];
     const uniquePaths = [...new Set(pathsToRevalidate)];
 

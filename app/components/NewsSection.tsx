@@ -42,6 +42,13 @@ export default function NewsSection({ news }: { news: NewsItem[] }) {
                 >
                   {item.title}
                 </Link>
+              ) : item.legalSlug ? (
+                <Link
+                  href={`/formats/${item.legalSlug}`}
+                  className="text-sm leading-relaxed text-blue-600 underline-offset-2 hover:underline sm:text-base"
+                >
+                  {item.title}
+                </Link>
               ) : (
                 <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
                   {item.title}

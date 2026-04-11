@@ -2,7 +2,7 @@ import TopAboutCarousel from "@/app/components/TopAboutCarousel";
 import NewsSection from "@/app/components/NewsSection";
 import { getNewsItems } from "@/app/lib/nilto-news";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function TopPage() {
   const news = await getNewsItems();
@@ -42,7 +42,7 @@ export default async function TopPage() {
             <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-white/90 sm:text-sm md:text-base">
               企業の生成AI導入を「知る」「実装する」「整える」の3ステップで
               <br className="hidden sm:block" />
-              一元的にサポートするメンバー向けポータルです。
+              一元的にサポートする、無料で使える実践ポータルです。
             </p>
           </div>
         </div>
